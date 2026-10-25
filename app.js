@@ -364,6 +364,8 @@ function renderCard(recipe) {
       card.querySelector(".check").classList.remove("check--done");
     }
     saveState();
+    // переносим выбранную карточку вниз
+    if (card.parentNode) card.parentNode.appendChild(card);
     renderShoppingList();
   });
 
@@ -381,7 +383,8 @@ function render() {
 
     const items = state.current
       .map(getRecipe)
-      .filter((recipe) => recipe && recipe.category === cat.key);
+      .filter((recipe) => recipe && recipe.category === cat.key)
+      .sort((a, b) => (state.checked.includes(a.id) ? 1 : 0) - (state.checked.includes(b.id) ? 1 : 0));
 
     if (!items.length) {
       const note = document.createElement("p");
@@ -933,7 +936,7 @@ function renderAllRecipes() {
     if (cat !== "all" && recipe.category !== cat) return false;
     if (query && !recipe.title.toLowerCase().includes(query)) return false;
     return true;
-  });
+  }).sort((a, b) => (state.checked.includes(a.id) ? 1 : 0) - (state.checked.includes(b.id) ? 1 : 0));
 
   if (filtered.length === 0) {
     container.innerHTML = '<p class="cards-empty">Ничего не найдено.</p>';
