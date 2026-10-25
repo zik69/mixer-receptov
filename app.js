@@ -364,9 +364,8 @@ function renderCard(recipe) {
       card.querySelector(".check").classList.remove("check--done");
     }
     saveState();
-    // переносим выбранную карточку вниз
-    if (card.parentNode) card.parentNode.appendChild(card);
-    renderShoppingList();
+    // перерисовываем, чтобы выбранные карточки ушли вниз
+    render();
   });
 
   return card;

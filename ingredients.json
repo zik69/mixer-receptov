@@ -1814,6 +1814,241 @@
       "gramsPerUnit": 0,
       "lentaQuery": "Мисо-паста",
       "pack": null
+    },
+    {
+      "id": "fish_sauce",
+      "name": "Рыбный соус",
+      "aliases": [
+        "Рыбный соус",
+        "Соус рыбный",
+        "Нам пла"
+      ],
+      "category": "масло и соусы",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Рыбный соус",
+      "pack": {
+        "unit": "бутылка",
+        "size": 200
+      }
+    },
+    {
+      "id": "teriyaki_sauce",
+      "name": "Соус терияки",
+      "aliases": [
+        "Соус терияки",
+        "Терияки"
+      ],
+      "category": "масло и соусы",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Соус терияки",
+      "pack": {
+        "unit": "бутылка",
+        "size": 250
+      }
+    },
+    {
+      "id": "hoisin_sauce",
+      "name": "Соус хойсин",
+      "aliases": [
+        "Соус хойсин",
+        "Хойсин"
+      ],
+      "category": "масло и соусы",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Соус хойсин",
+      "pack": null
+    },
+    {
+      "id": "curry_paste",
+      "name": "Паста карри",
+      "aliases": [
+        "Паста карри",
+        "Карри паста",
+        "Карри"
+      ],
+      "category": "масло и соусы",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Паста карри",
+      "pack": null
+    },
+    {
+      "id": "coconut_milk",
+      "name": "Кокосовое молоко",
+      "aliases": [
+        "Кокосовое молоко",
+        "Молоко кокосовое"
+      ],
+      "category": "молочное и яйца",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Кокосовое молоко",
+      "pack": {
+        "unit": "банка",
+        "size": 400
+      }
+    },
+    {
+      "id": "lemongrass",
+      "name": "Лемонграсс",
+      "aliases": [
+        "Лемонграсс",
+        "Лимонное сорго"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Лемонграсс",
+      "pack": null
+    },
+    {
+      "id": "chili_sauce",
+      "name": "Соус чили",
+      "aliases": [
+        "Соус чили",
+        "Чили соус",
+        "Срирача"
+      ],
+      "category": "масло и соусы",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Соус чили",
+      "pack": null
+    },
+    {
+      "id": "udon_noodles",
+      "name": "Лапша удон",
+      "aliases": [
+        "Лапша удон",
+        "Удон"
+      ],
+      "category": "крупы и макароны",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Лапша удон",
+      "pack": {
+        "unit": "упаковка",
+        "size": 300
+      }
+    },
+    {
+      "id": "soba_noodles",
+      "name": "Лапша соба",
+      "aliases": [
+        "Лапша соба",
+        "Соба"
+      ],
+      "category": "крупы и макароны",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Лапша соба",
+      "pack": {
+        "unit": "упаковка",
+        "size": 300
+      }
+    },
+    {
+      "id": "jasmine_rice",
+      "name": "Рис жасминовый",
+      "aliases": [
+        "Рис жасминовый",
+        "Жасминовый рис"
+      ],
+      "category": "крупы и макароны",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Рис жасминовый",
+      "pack": {
+        "unit": "упаковка",
+        "size": 1000
+      }
+    },
+    {
+      "id": "wakame",
+      "name": "Водоросли вакаме",
+      "aliases": [
+        "Водоросли вакаме",
+        "Вакаме"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Водоросли вакаме",
+      "pack": null
+    },
+    {
+      "id": "wasabi",
+      "name": "Васаби",
+      "aliases": [
+        "Васаби",
+        "Паста васаби"
+      ],
+      "category": "специи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Васаби",
+      "pack": null
+    },
+    {
+      "id": "pickled_ginger",
+      "name": "Имбирь маринованный",
+      "aliases": [
+        "Имбирь маринованный",
+        "Маринованный имбирь"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Имбирь маринованный",
+      "pack": null
+    },
+    {
+      "id": "peanuts",
+      "name": "Арахис",
+      "aliases": [
+        "Арахис",
+        "Орехи арахис"
+      ],
+      "category": "орехи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Арахис",
+      "pack": {
+        "unit": "упаковка",
+        "size": 200
+      }
+    },
+    {
+      "id": "peanut_butter",
+      "name": "Масло арахисовое",
+      "aliases": [
+        "Масло арахисовое",
+        "Арахисовое масло"
+      ],
+      "category": "масло и соусы",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Масло арахисовое",
+      "pack": null
+    },
+    {
+      "id": "shrimp",
+      "name": "Креветки",
+      "aliases": [
+        "Креветки",
+        "Креветки очищенные"
+      ],
+      "category": "рыба",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Креветки",
+      "pack": {
+        "unit": "упаковка",
+        "size": 300
+      }
     }
   ]
 }
