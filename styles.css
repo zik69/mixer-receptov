@@ -631,6 +631,125 @@ button { font: inherit; color: inherit; }
   .cards { grid-template-columns: repeat(2, 1fr); }
 }
 
-@media (min-width: 1024px) {
-  .menu { gap: 30px; }
+/* ==========================================================
+   Экран «Все рецепты»
+   ========================================================== */
+
+.all-recipes-screen {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  background: var(--bg);
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.all-recipes-screen[hidden] { display: none; }
+
+.all-recipes-screen__inner {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: var(--gutter);
+  padding-bottom: 40px;
+}
+
+.all-recipes-screen__head {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  flex-wrap: wrap;
+}
+
+.all-recipes-screen__title {
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--text);
+  margin: 0;
+}
+
+.all-recipes-screen__filters {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 16px;
+}
+
+.all-recipes-screen__search {
+  width: 100%;
+  padding: 10px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-sm);
+  font-size: 16px;
+  font-family: inherit;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.all-recipes-screen__search:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.all-recipes-screen__cats {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+
+.all-recipes-screen__cat {
+  padding: 8px 14px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+  color: var(--text-soft);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background .15s, color .15s, border-color .15s;
+}
+
+.all-recipes-screen__cat.is-active {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.all-recipes-screen__cards {
+  margin-top: 8px;
+}
+
+/* Кнопка «Все рецепты» рядом с «Мешать» */
+.all-recipes-btn {
+  margin-left: 10px;
+  vertical-align: middle;
+}
+
+/* Кухня (обычная / китайская) */
+.cuisine-toggle {
+  display: inline-flex;
+  flex: none;
+  padding: 2px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--surface);
+}
+
+.cuisine-toggle__btn {
+  min-width: 90px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--text-soft);
+  font-size: 15px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background .15s ease, color .15s ease;
+}
+
+.cuisine-toggle__btn.is-active {
+  background: var(--accent);
+  color: #fff;
 }

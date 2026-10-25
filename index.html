@@ -21,12 +21,17 @@
         <span class="mix-btn__icon" aria-hidden="true">✦</span>
         Мешать
       </button>
+      <button type="button" id="all-recipes-btn" class="link-btn all-recipes-btn">Все рецепты</button>
     </div>
   </div>
 
   <div class="settings">
     <div class="settings__inner">
       <p class="settings__hint" id="mix-hint">2 завтрака · 2 обеда · 2 ужина</p>
+      <div class="cuisine-toggle" role="group" aria-label="Кухня">
+        <button type="button" class="cuisine-toggle__btn is-active" data-cuisine="обычная" aria-pressed="true">Обычная</button>
+        <button type="button" class="cuisine-toggle__btn" data-cuisine="китайская" aria-pressed="false">Китайская</button>
+      </div>
       <div class="count-toggle" role="group" aria-label="Сколько рецептов из каждой категории">
         <button type="button" class="count-toggle__btn is-active" data-count="2" aria-pressed="true">2</button>
         <button type="button" class="count-toggle__btn" data-count="3" aria-pressed="false">3</button>
@@ -87,6 +92,25 @@
       <button type="button" id="reset-btn" class="footer__reset">Сбросить всё</button>
     </div>
   </footer>
+
+  <div id="all-recipes-screen" class="all-recipes-screen" hidden>
+    <div class="all-recipes-screen__inner">
+      <div class="all-recipes-screen__head">
+        <button type="button" id="all-recipes-back" class="link-btn">← Назад</button>
+        <h2 class="all-recipes-screen__title">Все рецепты</h2>
+      </div>
+      <div class="all-recipes-screen__filters">
+        <input type="search" id="recipe-search" class="all-recipes-screen__search" placeholder="Поиск по названию">
+        <div class="all-recipes-screen__cats" role="group" aria-label="Фильтр по категории">
+          <button type="button" class="all-recipes-screen__cat is-active" data-cat="all">Все</button>
+          <button type="button" class="all-recipes-screen__cat" data-cat="завтрак">Завтраки</button>
+          <button type="button" class="all-recipes-screen__cat" data-cat="обед">Обеды</button>
+          <button type="button" class="all-recipes-screen__cat" data-cat="ужин">Ужины</button>
+        </div>
+      </div>
+      <div class="cards all-recipes-screen__cards" id="all-recipes-cards"></div>
+    </div>
+  </div>
 
   <script src="recipes.js"></script>
   <script src="ingredients.js"></script>

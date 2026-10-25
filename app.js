@@ -36,10 +36,15 @@ const state = {
   excluded: [],       // названия исключённых продуктов
   checked: [],        // id рецептов «Добавлю в покупки»
   bought: [],         // ключи купленных продуктов
-  perCategory: 2      // сколько рецептов в каждой категории
+  perCategory: 2,     // сколько рецептов в каждой категории
+  cuisine: "обычная"  // выбранная кухня: "обычная" или "китайская"
 };
 
 const expanded = new Set();  // id рецептов с раскрытыми шагами (не сохраняем)
+
+// Экран «Все рецепты»
+let allRecipesCat = "all";   // текущий фильтр по категории
+let allRecipesQuery = "";    // текущий поисковый запрос
 
 /* ----------------------------------------------------------
    Помощники
@@ -98,7 +103,7 @@ function isAllowed(recipe) {
 }
 
 function recipePool(category) {
-  return catalog().filter((r) => r.category === category && isAllowed(r));
+  return catalog().filter((r) => r.category === category && r.cuisine === state.cuisine && isAllowed(r));
 }
 
 /* ----------------------------------------------------------
@@ -262,6 +267,7 @@ function loadState() {
   }
 
   if (data.perCategory === 2 || data.perCategory === 3) state.perCategory = data.perCategory;
+  if (data.cuisine === "обычная" || data.cuisine === "китайская") state.cuisine = data.cuisine;
 }
 
 /* ----------------------------------------------------------
@@ -710,6 +716,99 @@ function updateCountToggle() {
   });
 }
 
+function updateCuisineToggle() {
+  document.querySelectorAll(".cuisine-toggle__btn").forEach((btn) => {
+    const active = btn.dataset.cuisine === state.cuisine;
+    btn.classList.toggle("is-active", active);
+    btn.setAttribute("aria-pressed", active ? "true" : "false");
+  });
+}
+
+function setCuisine(value) {
+  if (value !== "обычная" && value !== "китайская") return;
+  if (value === state.cuisine) return;
+  state.cuisine = value;
+  // сброс истории при смене кухни
+  state.history = [];
+  state.current = [];
+  state.repeats = [];
+  state.checked = [];
+  state.today = null;
+  saveState();
+  updateCuisineToggle();
+  generateMenu();
+}
+
+/* ----------------------------------------------------------
+   Экран «Все рецепты»
+   ---------------------------------------------------------- */
+
+function renderAllRecipes() {
+  const container = document.getElementById("all-recipes-cards");
+  if (!container) return;
+  container.innerHTML = "";
+
+  const query = allRecipesQuery.trim().toLowerCase();
+  const cat = allRecipesCat;
+
+  const filtered = catalog().filter((recipe) => {
+    if (cat !== "all" && recipe.category !== cat) return false;
+    if (query && !recipe.title.toLowerCase().includes(query)) return false;
+    return true;
+  });
+
+  if (filtered.length === 0) {
+    container.innerHTML = '<p class="cards-empty">Ничего не найдено.</p>';
+    return;
+  }
+
+  filtered.forEach((recipe) => {
+    container.appendChild(renderCard(recipe));
+  });
+}
+
+function initAllRecipesScreen() {
+  const btn = document.getElementById("all-recipes-btn");
+  const screen = document.getElementById("all-recipes-screen");
+  const backBtn = document.getElementById("all-recipes-back");
+  const searchInput = document.getElementById("recipe-search");
+  const catButtons = document.querySelectorAll(".all-recipes-screen__cat");
+
+  if (!btn || !screen) return;
+
+  btn.addEventListener("click", () => {
+    screen.hidden = false;
+    document.body.style.overflow = "hidden";
+    allRecipesCat = "all";
+    allRecipesQuery = "";
+    if (searchInput) searchInput.value = "";
+    catButtons.forEach((b) => b.classList.toggle("is-active", b.dataset.cat === "all"));
+    renderAllRecipes();
+  });
+
+  if (backBtn) {
+    backBtn.addEventListener("click", () => {
+      screen.hidden = true;
+      document.body.style.overflow = "";
+    });
+  }
+
+  if (searchInput) {
+    searchInput.addEventListener("input", () => {
+      allRecipesQuery = searchInput.value;
+      renderAllRecipes();
+    });
+  }
+
+  catButtons.forEach((btn) => {
+    btn.addEventListener("click", () => {
+      allRecipesCat = btn.dataset.cat;
+      catButtons.forEach((b) => b.classList.toggle("is-active", b === btn));
+      renderAllRecipes();
+    });
+  });
+}
+
 function initButtons() {
   document.getElementById("mix-btn").addEventListener("click", () => generateMenu(true));
 
@@ -720,6 +819,12 @@ function initButtons() {
       state.perCategory = value;
       updateCountToggle();
       generateMenu(true);
+    });
+  });
+
+  document.querySelectorAll(".cuisine-toggle__btn").forEach((btn) => {
+    btn.addEventListener("click", () => {
+      setCuisine(btn.dataset.cuisine);
     });
   });
 
@@ -763,9 +868,14 @@ function init() {
   buildIndex();
   loadState();
   updateCountToggle();
+  updateCuisineToggle();
   initButtons();
+  initAllRecipesScreen();
 
-  const validCurrent = state.current.filter((id) => getRecipe(id));
+  const validCurrent = state.current.filter((id) => {
+    const recipe = getRecipe(id);
+    return recipe && recipe.cuisine === state.cuisine;
+  });
   const dayChanged = state.today !== todayKey();
 
   if (dayChanged || validCurrent.length === 0) {
