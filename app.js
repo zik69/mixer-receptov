@@ -376,14 +376,40 @@ function renderCard(recipe) {
    ---------------------------------------------------------- */
 
 function render() {
+  // Отдельный раздел «Выбранное» — отмеченные рецепты уходят сюда
+  let selectedBox = document.getElementById("selected-cards");
+  if (!selectedBox) {
+    // создаём контейнер один раз
+    const main = document.querySelector(".menu");
+    if (main) {
+      const section = document.createElement("section");
+      section.className = "menu-group menu-group--selected";
+      section.innerHTML = '<h2 class="section-title"><span class="section-title__dot section-title__dot--buy" aria-hidden="true"></span> Выбранное</h2><div class="cards" id="selected-cards"></div>';
+      main.appendChild(section);
+      selectedBox = document.getElementById("selected-cards");
+    }
+  }
+  if (selectedBox) {
+    selectedBox.innerHTML = "";
+    const selected = state.current.map(getRecipe).filter((r) => r && state.checked.includes(r.id));
+    if (selected.length) {
+      for (const recipe of selected) selectedBox.appendChild(renderCard(recipe));
+      const section = selectedBox.parentElement;
+      if (section) section.hidden = false;
+    } else {
+      const section = selectedBox.parentElement;
+      if (section) section.hidden = true;
+    }
+  }
+
   for (const cat of CATEGORIES) {
     const box = document.getElementById(cat.target);
     box.innerHTML = "";
 
+    // Выбранные рецепты убираем из категорий (они в разделе «Выбранное»)
     const items = state.current
       .map(getRecipe)
-      .filter((recipe) => recipe && recipe.category === cat.key)
-      .sort((a, b) => (state.checked.includes(a.id) ? 1 : 0) - (state.checked.includes(b.id) ? 1 : 0));
+      .filter((recipe) => recipe && recipe.category === cat.key && !state.checked.includes(recipe.id));
 
     if (!items.length) {
       const note = document.createElement("p");
@@ -935,14 +961,30 @@ function renderAllRecipes() {
     if (cat !== "all" && recipe.category !== cat) return false;
     if (query && !recipe.title.toLowerCase().includes(query)) return false;
     return true;
-  }).sort((a, b) => (state.checked.includes(a.id) ? 1 : 0) - (state.checked.includes(b.id) ? 1 : 0));
+  });
 
-  if (filtered.length === 0) {
+  // Выбранные рецепты — в отдельный раздел «Выбранное»
+  const selectedEl = document.getElementById("selected-all-cards");
+  const selectedSection = document.getElementById("selected-all-section");
+  if (selectedEl && selectedSection) {
+    selectedEl.innerHTML = "";
+    const selected = filtered.filter((r) => state.checked.includes(r.id));
+    if (selected.length) {
+      selectedSection.hidden = false;
+      selected.forEach((r) => selectedEl.appendChild(renderCard(r)));
+    } else {
+      selectedSection.hidden = true;
+    }
+  }
+
+  const nonSelected = filtered.filter((r) => !state.checked.includes(r.id));
+
+  if (nonSelected.length === 0 && (selectedEl ? selectedEl.children.length === 0 : true)) {
     container.innerHTML = '<p class="cards-empty">Ничего не найдено.</p>';
     return;
   }
 
-  filtered.forEach((recipe) => {
+  nonSelected.forEach((recipe) => {
     container.appendChild(renderCard(recipe));
   });
 }
