@@ -739,6 +739,63 @@ function setCuisine(value) {
   generateMenu();
 }
 
+function populateIngredientsDatalist() {
+  const dl = document.getElementById("ingredients-list");
+  if (!dl) return;
+  dl.innerHTML = "";
+  const db = typeof INGREDIENTS === "undefined" ? null : INGREDIENTS;
+  if (!db) return;
+  const names = new Set();
+  db.ingredients.forEach((i) => names.add(i.name));
+  names.forEach((n) => {
+    const opt = document.createElement("option");
+    opt.value = n;
+    dl.appendChild(opt);
+  });
+}
+
+function renderExcluded() {
+  const list = document.getElementById("excluded-list");
+  if (!list) return;
+  list.innerHTML = "";
+  state.excluded.forEach((name) => {
+    const li = document.createElement("li");
+    li.className = "excluded__chip";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "×";
+    btn.setAttribute("aria-label", "Убрать " + name);
+    btn.addEventListener("click", () => {
+      state.excluded = state.excluded.filter((x) => norm(x) !== norm(name));
+      saveState();
+      renderExcluded();
+    });
+    li.textContent = name + " ";
+    li.appendChild(btn);
+    list.appendChild(li);
+  });
+}
+
+function addExcludedIngredient() {
+  const input = document.getElementById("excluded-input");
+  if (!input) return;
+  const raw = String(input.value || "").trim();
+  if (!raw) return;
+  const db = typeof INGREDIENTS === "undefined" ? null : INGREDIENTS;
+  let name = raw;
+  if (db) {
+    const found = db.ingredients.find((i) => norm(i.name) === norm(raw) || (i.aliases || []).some((a) => norm(a) === norm(raw)));
+    if (found) name = found.name;
+  }
+  if (!state.excluded.some((x) => norm(x) === norm(name))) {
+    state.excluded.push(name);
+    saveState();
+    renderExcluded();
+    generateMenu(true);
+  }
+  input.value = "";
+}
+
 /* ----------------------------------------------------------
    Экран «Все рецепты»
    ---------------------------------------------------------- */
@@ -828,6 +885,18 @@ function initButtons() {
     });
   });
 
+  const excludedAdd = document.getElementById("excluded-add");
+  if (excludedAdd) excludedAdd.addEventListener("click", addExcludedIngredient);
+  const excludedInput = document.getElementById("excluded-input");
+  if (excludedInput) {
+    excludedInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") {
+        e.preventDefault();
+        addExcludedIngredient();
+      }
+    });
+  }
+
   document.getElementById("clear-btn").addEventListener("click", () => {
     state.bought = [];
     saveState();
@@ -869,8 +938,10 @@ function init() {
   loadState();
   updateCountToggle();
   updateCuisineToggle();
+  populateIngredientsDatalist();
   initButtons();
   initAllRecipesScreen();
+  renderExcluded();
 
   const validCurrent = state.current.filter((id) => {
     const recipe = getRecipe(id);

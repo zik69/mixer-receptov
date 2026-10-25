@@ -40,6 +40,18 @@
     <p class="settings__warn" id="mix-warn" hidden></p>
   </div>
 
+  <div class="excluded">
+    <div class="excluded__inner">
+      <p class="excluded__title">Исключённые продукты</p>
+      <div class="excluded__row">
+        <input type="text" id="excluded-input" class="excluded__input" placeholder="Название продукта" list="ingredients-list">
+        <button type="button" id="excluded-add" class="link-btn">Исключить</button>
+      </div>
+      <datalist id="ingredients-list"></datalist>
+      <ul class="excluded__list" id="excluded-list"></ul>
+    </div>
+  </div>
+
   <main class="main">
 
     <div class="menu">
