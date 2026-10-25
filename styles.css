@@ -597,7 +597,25 @@ button { font: inherit; color: inherit; }
   margin: 0 auto;
   color: var(--text-faint);
   font-size: 13.5px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  flex-wrap: wrap;
 }
+
+.footer__reset {
+  border: 0;
+  background: transparent;
+  color: var(--text-faint);
+  font-size: 13px;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+  cursor: pointer;
+  padding: 4px 0;
+}
+
+.footer__reset:hover { color: var(--accent-dark); }
 
 /* ==========================================================
    Широкий экран

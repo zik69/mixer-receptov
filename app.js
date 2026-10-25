@@ -728,6 +728,20 @@ function initButtons() {
     saveState();
     renderShoppingList();
   });
+
+  const resetBtn = document.getElementById("reset-btn");
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      const ok = window.confirm("Сбросить всё? Набор на сегодня, история, любимые и отметки будут удалены.");
+      if (!ok) return;
+      try {
+        localStorage.removeItem(STORAGE_KEY);
+      } catch (error) {
+        /* игнорируем — всё равно перезагружаем */
+      }
+      window.location.reload();
+    });
+  }
 }
 
 /* ----------------------------------------------------------
