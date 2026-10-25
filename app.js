@@ -271,7 +271,7 @@ function loadState() {
   }
 
   if (data.perCategory === 2 || data.perCategory === 3) state.perCategory = data.perCategory;
-  if (data.cuisine === "обычная" || data.cuisine === "китайская") state.cuisine = data.cuisine;
+  if (data.cuisine === "обычная" || data.cuisine === "китайская" || data.cuisine === "сложная") state.cuisine = data.cuisine;
   if (data.lentaPrices && typeof data.lentaPrices === "object") state.lentaPrices = data.lentaPrices;
 }
 
@@ -874,7 +874,7 @@ function updateCuisineToggle() {
 }
 
 function setCuisine(value) {
-  if (value !== "обычная" && value !== "китайская") return;
+  if (value !== "обычная" && value !== "китайская" && value !== "сложная") return;
   if (value === state.cuisine) return;
   state.cuisine = value;
   // сброс истории при смене кухни

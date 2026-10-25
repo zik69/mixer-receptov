@@ -2949,7 +2949,7 @@ const RECIPES = [
     id: 121,
     title: "Шакшука с фетой и зеленью",
     category: "завтрак",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 30,
     servings: 2,
     ingredients: [
@@ -2977,7 +2977,7 @@ const RECIPES = [
     id: 122,
     title: "Блины с творогом и ягодами",
     category: "завтрак",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 35,
     servings: 4,
     ingredients: [
@@ -3003,7 +3003,7 @@ const RECIPES = [
     id: 123,
     title: "Овсянка с карамелизированными яблоками",
     category: "завтрак",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -3028,7 +3028,7 @@ const RECIPES = [
     id: 124,
     title: "Яйца бенедикт с лососем",
     category: "завтрак",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 35,
     servings: 2,
     ingredients: [
@@ -3053,7 +3053,7 @@ const RECIPES = [
     id: 125,
     title: "Тосты с авокадо и яйцом пашот",
     category: "завтрак",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -3078,7 +3078,7 @@ const RECIPES = [
     id: 126,
     title: "Домашняя гранола с орехами",
     category: "завтрак",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 40,
     servings: 6,
     ingredients: [
@@ -3104,7 +3104,7 @@ const RECIPES = [
     id: 127,
     title: "Сырники с вишнёвым соусом",
     category: "завтрак",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 35,
     servings: 3,
     ingredients: [
@@ -3129,7 +3129,7 @@ const RECIPES = [
     id: 128,
     title: "Фриттата с овощами и сыром",
     category: "завтрак",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -3155,7 +3155,7 @@ const RECIPES = [
     id: 129,
     title: "Манная каша с ягодами",
     category: "завтрак",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -3177,7 +3177,7 @@ const RECIPES = [
     id: 130,
     title: "Брускетта с томатами и базиликом",
     category: "завтрак",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 15,
     servings: 2,
     ingredients: [
@@ -3200,7 +3200,7 @@ const RECIPES = [
     id: 131,
     title: "Борщ классический",
     category: "обед",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 60,
     servings: 6,
     ingredients: [
@@ -3230,7 +3230,7 @@ const RECIPES = [
     id: 132,
     title: "Солянка мясная сборная",
     category: "обед",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 50,
     servings: 4,
     ingredients: [
@@ -3258,7 +3258,7 @@ const RECIPES = [
     id: 133,
     title: "Рассольник с перловкой",
     category: "обед",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 50,
     servings: 4,
     ingredients: [
@@ -3284,7 +3284,7 @@ const RECIPES = [
     id: 134,
     title: "Щи из квашеной капусты",
     category: "обед",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 55,
     servings: 5,
     ingredients: [
@@ -3311,7 +3311,7 @@ const RECIPES = [
     id: 135,
     title: "Суп-пюре из тыквы со сливками",
     category: "обед",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 35,
     servings: 3,
     ingredients: [
@@ -3337,7 +3337,7 @@ const RECIPES = [
     id: 136,
     title: "Минестроне",
     category: "обед",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 40,
     servings: 4,
     ingredients: [
@@ -3366,7 +3366,7 @@ const RECIPES = [
     id: 137,
     title: "Том кха гай",
     category: "обед",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 40,
     servings: 3,
     ingredients: [
@@ -3393,7 +3393,7 @@ const RECIPES = [
     id: 138,
     title: "Рамен с курицей и яйцом",
     category: "обед",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 45,
     servings: 2,
     ingredients: [
@@ -3422,7 +3422,7 @@ const RECIPES = [
     id: 139,
     title: "Суп с фрикадельками и рисом",
     category: "обед",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 35,
     servings: 4,
     ingredients: [
@@ -3448,7 +3448,7 @@ const RECIPES = [
     id: 140,
     title: "Грибной суп с перловкой",
     category: "обед",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 45,
     servings: 4,
     ingredients: [
@@ -3475,7 +3475,7 @@ const RECIPES = [
     id: 141,
     title: "Жаркое по-домашнему",
     category: "ужин",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 60,
     servings: 4,
     ingredients: [
@@ -3503,7 +3503,7 @@ const RECIPES = [
     id: 142,
     title: "Паста карбонара",
     category: "ужин",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 30,
     servings: 2,
     ingredients: [
@@ -3527,7 +3527,7 @@ const RECIPES = [
     id: 143,
     title: "Ризотто с грибами",
     category: "ужин",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 45,
     servings: 3,
     ingredients: [
@@ -3554,7 +3554,7 @@ const RECIPES = [
     id: 144,
     title: "Плов с курицей",
     category: "ужин",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 60,
     servings: 4,
     ingredients: [
@@ -3582,7 +3582,7 @@ const RECIPES = [
     id: 145,
     title: "Запечённая курица с картофелем",
     category: "ужин",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 50,
     servings: 4,
     ingredients: [
@@ -3609,7 +3609,7 @@ const RECIPES = [
     id: 146,
     title: "Стейк с овощами гриль",
     category: "ужин",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 35,
     servings: 2,
     ingredients: [
@@ -3636,7 +3636,7 @@ const RECIPES = [
     id: 147,
     title: "Лазанья мясная",
     category: "ужин",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 60,
     servings: 6,
     ingredients: [
@@ -3665,7 +3665,7 @@ const RECIPES = [
     id: 148,
     title: "Тефтели в томатном соусе",
     category: "ужин",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 40,
     servings: 4,
     ingredients: [
@@ -3692,7 +3692,7 @@ const RECIPES = [
     id: 149,
     title: "Запечённая рыба с овощами",
     category: "ужин",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 40,
     servings: 3,
     ingredients: [
@@ -3718,7 +3718,7 @@ const RECIPES = [
     id: 150,
     title: "Паста с морепродуктами",
     category: "ужин",
-    cuisine: "обычная",
+    cuisine: "сложная",
     time: 35,
     servings: 2,
     ingredients: [
