@@ -872,3 +872,47 @@ button { font: inherit; color: inherit; }
   gap: 12px;
   font-size: 14px;
 }
+
+.shopping__price-select {
+  max-width: 100%;
+  font-size: 13px;
+  padding: 4px 8px;
+  border: 1px solid var(--border-strong);
+  border-radius: 8px;
+  background: var(--surface);
+  color: var(--text);
+}
+
+.shopping__price {
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--accent);
+}
+
+@media (max-width: 480px) {
+  .shopping__list li {
+    flex-wrap: wrap;
+  }
+  .shopping__right {
+    width: 100%;
+    flex-direction: row;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: flex-end;
+    margin-left: 0;
+    padding-left: 32px;
+  }
+  .home-ingredients__input,
+  .excluded__input {
+    width: 100%;
+  }
+  .home-ingredients__row,
+  .excluded__row {
+    flex-direction: column;
+    align-items: stretch;
+  }
+  .home-ingredients__row button,
+  .excluded__row button {
+    width: 100%;
+  }
+}
