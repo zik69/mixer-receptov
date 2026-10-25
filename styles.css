@@ -157,6 +157,7 @@ button { font: inherit; color: inherit; }
 
 .settings__inner {
   display: flex;
+  flex-wrap: wrap;
   align-items: center;
   justify-content: space-between;
   gap: 12px;
@@ -773,6 +774,7 @@ button { font: inherit; color: inherit; }
 
 .excluded__row {
   display: flex;
+  flex-wrap: wrap;
   gap: 8px;
   align-items: center;
 }

@@ -212,7 +212,7 @@ function generateMenu(excludeCurrent) {
   rememberToday(state.current);
 
   // отметки рецептов, которых больше нет в меню, убираем
-  state.checked = state.checked.filter((id) => state.current.includes(id));
+  state.checked = state.checked.filter((id) => getRecipe(id));
 
   saveState();
   render();
@@ -744,9 +744,10 @@ function renderShoppingList() {
   const empty = document.getElementById("shopping-empty");
   list.innerHTML = "";
 
-  const chosen = state.current
+  // Корзина собирается из всех отмеченных рецептов (и с главной, и из «Все рецепты»)
+  const chosen = state.checked
     .map(getRecipe)
-    .filter((recipe) => recipe && state.checked.includes(recipe.id));
+    .filter((recipe) => recipe);
 
   const merged = mergeIngredients(chosen);
 
@@ -1066,7 +1067,7 @@ function init() {
     generateMenu();
   } else {
     state.current = validCurrent;
-    state.checked = state.checked.filter((id) => state.current.includes(id));
+    state.checked = state.checked.filter((id) => getRecipe(id));
     render();
   }
 }
