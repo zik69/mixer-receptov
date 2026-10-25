@@ -124,6 +124,22 @@
           <button type="button" class="all-recipes-screen__cat" data-cat="ужин">Ужины</button>
         </div>
       </div>
+
+      <div class="home-ingredients">
+        <button type="button" id="home-toggle" class="link-btn">Что есть дома ▾</button>
+        <div id="home-panel" class="home-ingredients__panel" hidden>
+          <div class="home-ingredients__row">
+            <input type="text" id="home-input" class="home-ingredients__input" placeholder="Добавить продукт" list="ingredients-list">
+            <button type="button" id="home-add" class="link-btn">Добавить</button>
+            <button type="button" id="home-clear" class="link-btn">Очистить</button>
+          </div>
+          <div class="home-ingredients__chips" id="home-chips"></div>
+          <div class="home-ingredients__mode">
+            <label><input type="radio" name="home-mode" value="strict" checked> Строго (все ингредиенты есть)</label>
+            <label><input type="radio" name="home-mode" value="soft"> Мягко (по совпадению)</label>
+          </div>
+        </div>
+      </div>
       <div class="selected-all" id="selected-all-section" hidden>
         <h3 class="section-title"><span class="section-title__dot section-title__dot--buy" aria-hidden="true"></span> Выбранное</h3>
         <div class="cards all-recipes-screen__cards" id="selected-all-cards"></div>

@@ -825,3 +825,50 @@ button { font: inherit; color: inherit; }
   font-weight: 700;
   color: var(--text);
 }
+
+/* Что есть дома */
+.home-ingredients {
+  margin: 12px 0;
+}
+
+.home-ingredients__panel {
+  margin-top: 8px;
+  padding: 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: 12px;
+  background: var(--surface);
+}
+
+.home-ingredients__row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  align-items: center;
+}
+
+.home-ingredients__input {
+  flex: 1;
+  min-width: 160px;
+  min-height: 36px;
+  padding: 6px 12px;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 15px;
+}
+
+.home-ingredients__chips {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.home-ingredients__mode {
+  margin-top: 8px;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  font-size: 14px;
+}

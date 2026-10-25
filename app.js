@@ -38,7 +38,8 @@ const state = {
   bought: [],         // ключи купленных продуктов
   perCategory: 2,     // сколько рецептов в каждой категории
   cuisine: "обычная",  // выбранная кухня: "обычная" или "китайская"
-  lentaPrices: {}     // выбранные цены Ленты: ключ norm(имя) -> { id, name, price }
+  lentaPrices: {},    // выбранные цены Ленты: ключ norm(имя) -> { id, name, price }
+  homeIngredients: [] // ингредиенты, которые есть дома
 };
 
 // Кэш вариантов Ленты в памяти (не сохраняется): ключ norm(имя) -> массив товаров
@@ -49,6 +50,7 @@ const expanded = new Set();  // id рецептов с раскрытыми ша
 // Экран «Все рецепты»
 let allRecipesCat = "all";   // текущий фильтр по категории
 let allRecipesQuery = "";    // текущий поисковый запрос
+let homeMode = "strict";     // режим фильтра «что есть дома»
 
 /* ----------------------------------------------------------
    Помощники
@@ -273,6 +275,7 @@ function loadState() {
   if (data.perCategory === 2 || data.perCategory === 3) state.perCategory = data.perCategory;
   if (data.cuisine === "обычная" || data.cuisine === "китайская" || data.cuisine === "сложная") state.cuisine = data.cuisine;
   if (data.lentaPrices && typeof data.lentaPrices === "object") state.lentaPrices = data.lentaPrices;
+  if (Array.isArray(data.homeIngredients)) state.homeIngredients = data.homeIngredients.filter((x) => typeof x === "string");
 }
 
 /* ----------------------------------------------------------
@@ -946,6 +949,71 @@ function addExcludedIngredient() {
 }
 
 /* ----------------------------------------------------------
+   «Что есть дома»
+   ---------------------------------------------------------- */
+
+function renderHomeChips() {
+  const box = document.getElementById("home-chips");
+  if (!box) return;
+  box.innerHTML = "";
+  state.homeIngredients.forEach((name) => {
+    const chip = document.createElement("span");
+    chip.className = "excluded__chip";
+    chip.textContent = name + " ";
+    const btn = document.createElement("button");
+    btn.type = "button";
+    btn.textContent = "×";
+    btn.addEventListener("click", () => {
+      state.homeIngredients = state.homeIngredients.filter((x) => norm(x) !== norm(name));
+      saveState();
+      renderHomeChips();
+      renderAllRecipes();
+    });
+    chip.appendChild(btn);
+    box.appendChild(chip);
+  });
+}
+
+function addHomeIngredient() {
+  const input = document.getElementById("home-input");
+  if (!input) return;
+  const raw = String(input.value || "").trim();
+  if (!raw) return;
+  const db = typeof INGREDIENTS === "undefined" ? null : INGREDIENTS;
+  let name = raw;
+  if (db) {
+    const found = db.ingredients.find((i) => norm(i.name) === norm(raw) || (i.aliases || []).some((a) => norm(a) === norm(raw)));
+    if (found) name = found.name;
+  }
+  if (!state.homeIngredients.some((x) => norm(x) === norm(name))) {
+    state.homeIngredients.push(name);
+    saveState();
+    renderHomeChips();
+    renderAllRecipes();
+  }
+  input.value = "";
+}
+
+function clearHomeIngredients() {
+  state.homeIngredients = [];
+  saveState();
+  renderHomeChips();
+  renderAllRecipes();
+}
+
+function homeMatch(recipe) {
+  if (!state.homeIngredients.length) return { ok: true, pct: 1 };
+  const have = new Set(state.homeIngredients.map(norm));
+  const ings = recipe.ingredients.map((i) => norm(i.name));
+  const present = ings.filter((n) => have.has(n)).length;
+  const pct = ings.length ? present / ings.length : 1;
+  if (homeMode === "strict") {
+    return { ok: present === ings.length, pct };
+  }
+  return { ok: true, pct };
+}
+
+/* ----------------------------------------------------------
    Экран «Все рецепты»
    ---------------------------------------------------------- */
 
@@ -960,8 +1028,17 @@ function renderAllRecipes() {
   const filtered = catalog().filter((recipe) => {
     if (cat !== "all" && recipe.category !== cat) return false;
     if (query && !recipe.title.toLowerCase().includes(query)) return false;
+    if (state.homeIngredients.length) {
+      const m = homeMatch(recipe);
+      if (homeMode === "strict" && !m.ok) return false;
+    }
     return true;
   });
+
+  // В мягком режиме сортируем по совпадению (больше — выше)
+  if (state.homeIngredients.length && homeMode === "soft") {
+    filtered.sort((a, b) => homeMatch(b).pct - homeMatch(a).pct);
+  }
 
   // Выбранные рецепты — в отдельный раздел «Выбранное»
   const selectedEl = document.getElementById("selected-all-cards");
@@ -1007,6 +1084,7 @@ function initAllRecipesScreen() {
     catButtons.forEach((b) => b.classList.toggle("is-active", b.dataset.cat === "all"));
     renderAllRecipes();
     renderShoppingList();
+    renderHomeChips();
   });
 
   if (backBtn) {
@@ -1033,6 +1111,31 @@ function initAllRecipesScreen() {
       renderAllRecipes();
     });
   }
+
+  const homeToggle = document.getElementById("home-toggle");
+  const homePanel = document.getElementById("home-panel");
+  if (homeToggle && homePanel) {
+    homeToggle.addEventListener("click", () => {
+      homePanel.hidden = !homePanel.hidden;
+      homeToggle.textContent = homePanel.hidden ? "Что есть дома ▾" : "Что есть дома ▴";
+    });
+  }
+  const homeAdd = document.getElementById("home-add");
+  if (homeAdd) homeAdd.addEventListener("click", addHomeIngredient);
+  const homeInput = document.getElementById("home-input");
+  if (homeInput) {
+    homeInput.addEventListener("keydown", (e) => {
+      if (e.key === "Enter") { e.preventDefault(); addHomeIngredient(); }
+    });
+  }
+  const homeClear = document.getElementById("home-clear");
+  if (homeClear) homeClear.addEventListener("click", clearHomeIngredients);
+  document.querySelectorAll('input[name="home-mode"]').forEach((r) => {
+    r.addEventListener("change", () => {
+      homeMode = r.value;
+      renderAllRecipes();
+    });
+  });
 
   catButtons.forEach((btn) => {
     btn.addEventListener("click", () => {
