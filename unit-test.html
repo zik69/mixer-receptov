@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Проверка словаря ингредиентов — Миксер рецептов</title>
+    <script src="ingredients.js"></script>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; }
         body {
@@ -138,12 +139,7 @@
     <script>
     // =========== ЛОГИКА СЛОЖЕНИЯ (та же, что будет в Task-005) ===========
 
-    let DB = null;
-
-    async function loadDB() {
-        const resp = await fetch('ingredients.json');
-        DB = await resp.json();
-    }
+    const DB = INGREDIENTS;
 
     function findIngredient(rawName) {
         const normalized = rawName.toLowerCase().trim();
@@ -432,19 +428,16 @@
 
     // =========== ЗАПУСК ===========
 
-    (async () => {
-        try {
-            await loadDB();
-            renderStats();
-            renderTests();
-            renderCategories();
-            renderAllIngredients();
-        } catch (e) {
-            document.getElementById('stats').innerHTML =
-                `<div style="color: red">Ошибка загрузки: ${e.message}</div>`;
-            console.error(e);
-        }
-    })();
+    try {
+        renderStats();
+        renderTests();
+        renderCategories();
+        renderAllIngredients();
+    } catch (e) {
+        document.getElementById('stats').innerHTML =
+            `<div style="color: red">Ошибка: ${e.message}</div>`;
+        console.error(e);
+    }
     </script>
 </body>
 </html>

@@ -495,6 +495,11 @@ button { font: inherit; color: inherit; }
   font-size: 16px;
 }
 
+.shopping__list li label {
+  flex: 1;
+  min-width: 0;
+}
+
 .shopping__list li:last-child { border-bottom: 0; }
 
 .shopping__list li.is-bought {
@@ -503,6 +508,64 @@ button { font: inherit; color: inherit; }
 
 .shopping__list li.is-bought label {
   text-decoration: line-through;
+}
+
+/* Заголовок группы в списке покупок */
+.shopping__group {
+  padding: 12px 0 4px;
+  color: var(--text-soft);
+  font-size: 13px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: .06em;
+  border-bottom: 0;
+}
+
+.shopping__group:first-child { padding-top: 0; }
+
+/* Блок «Уже есть дома» */
+.shopping__pantry {
+  padding: 8px 10px;
+  margin-bottom: 8px;
+  border-radius: var(--radius-sm);
+  background: var(--bg-soft);
+  color: var(--text-soft);
+  font-size: 14px;
+  line-height: 1.5;
+  border-bottom: 0;
+}
+
+.shopping__pantry-label {
+  font-weight: 700;
+  color: var(--text);
+}
+
+/* Правая колонка: количество + пакеты */
+.shopping__right {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 2px;
+  flex: none;
+  margin-left: auto;
+}
+
+.shopping__pack {
+  color: var(--text-faint);
+  font-size: 12.5px;
+  font-variant-numeric: tabular-nums;
+}
+
+/* Не найденный в справочнике ингредиент */
+.shopping__list li.is-unknown {
+  background: #fff3e0;
+  border-radius: var(--radius-sm);
+  padding-left: 6px;
+  padding-right: 6px;
+}
+
+.shopping__list li.is-unknown label {
+  color: var(--accent-dark);
 }
 
 .cards-empty {

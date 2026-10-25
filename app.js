@@ -411,9 +411,218 @@ function renderWarning() {
 
 /* ----------------------------------------------------------
    Список покупок
-   Пока простой: каждый ингредиент отдельной строкой.
-   Сведение и группировка — Task-005.
+   Сводит одинаковые ингредиенты из разных рецептов в один пункт,
+   складывает количества в правильных единицах, показывает,
+   сколько пакетов брать в магазине.
    ---------------------------------------------------------- */
+
+function findIngredient(rawName) {
+  const db = typeof INGREDIENTS === "undefined" ? null : INGREDIENTS;
+  if (!db) return null;
+  const normalized = norm(rawName);
+  let found = db.ingredients.find((i) => norm(i.name) === normalized);
+  if (found) return found;
+  found = db.ingredients.find((i) => i.aliases.some((a) => norm(a) === normalized));
+  return found || null;
+}
+
+function scaleAmount(amount, factor) {
+  const num = parseFloat(String(amount).replace(",", "."));
+  if (isNaN(num)) return null;
+  return num * factor;
+}
+
+function convertAmount(amount, fromUnit, toUnit, db) {
+  const units = (typeof INGREDIENTS === "undefined" || !INGREDIENTS) ? {} : INGREDIENTS.units;
+  const fromDef = units[fromUnit];
+  const toDef = units[toUnit];
+  if (!fromDef || !toDef) return null;
+  if (fromDef.base === toDef.base) {
+    return amount * fromDef.factor / toDef.factor;
+  }
+  // шт ↔ г через вес штуки
+  if (db && db.gramsPerUnit) {
+    if (fromUnit === "шт" && toDef.base === "г") {
+      return (amount * db.gramsPerUnit) / toDef.factor;
+    }
+    if (toUnit === "шт" && fromDef.base === "г") {
+      return (amount * fromDef.factor) / db.gramsPerUnit;
+    }
+  }
+  return null;
+}
+
+function baseToHuman(amount, baseUnit) {
+  if (baseUnit === "г") {
+    if (amount >= 1000) {
+      return { amount: Math.round((amount / 1000) * 10) / 10, unit: "кг" };
+    }
+    return { amount: Math.round(amount), unit: "г" };
+  }
+  if (baseUnit === "мл") {
+    if (amount >= 1000) {
+      return { amount: Math.round((amount / 1000) * 10) / 10, unit: "л" };
+    }
+    return { amount: Math.round(amount), unit: "мл" };
+  }
+  return { amount: Math.max(1, Math.round(amount)), unit: baseUnit };
+}
+
+function pluralizePack(unit, n) {
+  const forms = {
+    "упаковка": ["упаковка", "упаковки", "упаковок"],
+    "десяток":  ["десяток", "десятка", "десятков"],
+    "бутылка":  ["бутылка", "бутылки", "бутылок"],
+    "банка":    ["банка", "банки", "банок"],
+  };
+  const f = forms[unit];
+  if (!f) return unit;
+  const mod10 = n % 10;
+  const mod100 = n % 100;
+  if (mod100 >= 11 && mod100 <= 19) return f[2];
+  if (mod10 === 1) return f[0];
+  if (mod10 >= 2 && mod10 <= 4) return f[1];
+  return f[2];
+}
+
+function mergeIngredients(checkedRecipes) {
+  const map = new Map();
+
+  for (const recipe of checkedRecipes) {
+    const scale = 2 / (recipe.servings || 2);
+    for (const ing of recipe.ingredients) {
+      const db = findIngredient(ing.name);
+      const key = db ? "id:" + db.id : "unknown:" + norm(ing.name);
+      if (!map.has(key)) {
+        map.set(key, {
+          db,
+          name: db ? db.name : ing.name,
+          category: db ? db.category : "Прочее",
+          convertible: [],
+          textLines: [],
+        });
+      }
+      const entry = map.get(key);
+
+      const amount = String(ing.amount).trim();
+      const unit = String(ing.unit || "").trim();
+      const scaled = scaleAmount(amount, scale);
+      const units = (typeof INGREDIENTS === "undefined" || !INGREDIENTS) ? {} : INGREDIENTS.units;
+      const unitDef = units[unit];
+
+      if (scaled === null || !unitDef) {
+        entry.textLines.push((scaled === null ? amount : scaled) + (unit ? " " + unit : ""));
+      } else {
+        entry.convertible.push({ amount: scaled, unit });
+      }
+    }
+  }
+
+  // Решаем базовую единицу и складываем
+  for (const entry of map.values()) {
+    if (!entry.convertible.length) {
+      entry.hasConvertible = false;
+      entry.baseTotal = 0;
+      entry.baseUnit = null;
+      continue;
+    }
+    const units = (typeof INGREDIENTS === "undefined" || !INGREDIENTS) ? {} : INGREDIENTS.units;
+
+    const hasGrams = entry.convertible.some((c) => units[c.unit].base === "г") ||
+      (entry.db && entry.db.gramsPerUnit && entry.convertible.some((c) => c.unit === "шт"));
+    const hasMl = entry.convertible.some((c) => units[c.unit].base === "мл");
+
+    let baseUnit;
+    if (hasGrams && entry.db && entry.db.gramsPerUnit) baseUnit = "г";
+    else if (hasGrams && entry.convertible.some((c) => units[c.unit].base === "г")) baseUnit = "г";
+    else if (hasMl) baseUnit = "мл";
+    else baseUnit = units[entry.convertible[0].unit].base;
+
+    let total = 0;
+    let ok = true;
+    for (const c of entry.convertible) {
+      const converted = convertAmount(c.amount, c.unit, baseUnit, entry.db);
+      if (converted === null) { ok = false; break; }
+      total += converted;
+    }
+
+    if (!ok) {
+      entry.convertible.forEach((c) => entry.textLines.push(c.amount + " " + c.unit));
+      entry.convertible = [];
+      entry.hasConvertible = false;
+      entry.baseTotal = 0;
+      entry.baseUnit = null;
+    } else {
+      entry.hasConvertible = true;
+      entry.baseTotal = total;
+      entry.baseUnit = baseUnit;
+    }
+  }
+
+  return map;
+}
+
+function renderShoppingItem(entry) {
+  const li = document.createElement("li");
+  const key = entry.db ? "id:" + entry.db.id : "unknown:" + norm(entry.name);
+
+  // Количество в «натуральной» единице: для продуктов с весом штуки
+  // (яйца, лук) показываем штуки, а не граммы.
+  let naturalAmount = entry.baseTotal;
+  let naturalUnit = entry.baseUnit;
+  if (entry.db && entry.db.gramsPerUnit && entry.baseUnit === "г") {
+    naturalAmount = entry.baseTotal / entry.db.gramsPerUnit;
+    naturalUnit = "шт";
+  }
+
+  let amountStr = "";
+  if (entry.hasConvertible) {
+    const human = baseToHuman(naturalAmount, naturalUnit);
+    amountStr = human.amount + " " + human.unit;
+  }
+
+  // Текстовые количества (без дублей)
+  const uniqueText = [...new Set(entry.textLines)];
+  const amountDisplay = [amountStr, ...uniqueText].filter(Boolean).join("; ") || "—";
+
+  // Сколько пакетов брать
+  let packStr = "";
+  if (entry.db && entry.db.pack && entry.hasConvertible) {
+    const packs = Math.ceil(naturalAmount / entry.db.pack.size);
+    if (packs >= 1) {
+      const plural = pluralizePack(entry.db.pack.unit, packs);
+      const packHuman = baseToHuman(entry.db.pack.size, naturalUnit);
+      packStr = packs + " " + plural + " по " + packHuman.amount + " " + packHuman.unit;
+    }
+  }
+
+  li.innerHTML = `
+    <input type="checkbox" id="buy-${key}" data-key="${key}">
+    <label for="buy-${key}">${esc(entry.name)}</label>
+    <div class="shopping__right">
+      <span class="ingredients__amount">${esc(amountDisplay)}</span>
+      ${packStr ? `<span class="shopping__pack">${esc(packStr)}</span>` : ""}
+    </div>
+  `;
+
+  const box = li.querySelector("input");
+  if (state.bought.includes(key)) {
+    box.checked = true;
+    li.classList.add("is-bought");
+  }
+  box.addEventListener("change", () => {
+    if (box.checked) {
+      if (!state.bought.includes(key)) state.bought.push(key);
+      li.classList.add("is-bought");
+    } else {
+      state.bought = state.bought.filter((k) => k !== key);
+      li.classList.remove("is-bought");
+    }
+    saveState();
+  });
+
+  return li;
+}
 
 function renderShoppingList() {
   const list = document.getElementById("shopping-list");
@@ -424,43 +633,69 @@ function renderShoppingList() {
     .map(getRecipe)
     .filter((recipe) => recipe && state.checked.includes(recipe.id));
 
-  let count = 0;
+  const merged = mergeIngredients(chosen);
 
-  for (const recipe of chosen) {
-    recipe.ingredients.forEach((ing, index) => {
-      const key = recipe.id + ":" + index;
-      const li = document.createElement("li");
-      li.innerHTML = `
-        <input type="checkbox" id="buy-${key}" data-key="${key}">
-        <label for="buy-${key}">${esc(ing.name)}</label>
-        <span class="ingredients__amount">${esc(amountText(ing))}</span>
-      `;
-      const box = li.querySelector("input");
-      const label = li.querySelector("label");
+  const pantryItems = [];
+  const normalItems = [];
+  const unknownItems = [];
 
-      if (state.bought.includes(key)) {
-        box.checked = true;
-        li.classList.add("is-bought");
-      }
-
-      box.addEventListener("change", () => {
-        if (box.checked) {
-          if (!state.bought.includes(key)) state.bought.push(key);
-          li.classList.add("is-bought");
-        } else {
-          state.bought = state.bought.filter((k) => k !== key);
-          li.classList.remove("is-bought");
-        }
-        saveState();
-      });
-
-      list.appendChild(li);
-      count++;
-    });
+  for (const entry of merged.values()) {
+    if (entry.db && entry.db.pantry) pantryItems.push(entry);
+    else if (!entry.db) unknownItems.push(entry);
+    else normalItems.push(entry);
   }
 
-  empty.hidden = count > 0;
-  list.hidden = count === 0;
+  const sortByName = (a, b) => a.name.localeCompare(b.name, "ru");
+  normalItems.sort(sortByName);
+  unknownItems.sort(sortByName);
+
+  // Группируем обычные по категории
+  const groups = new Map();
+  for (const entry of normalItems) {
+    if (!groups.has(entry.category)) groups.set(entry.category, []);
+    groups.get(entry.category).push(entry);
+  }
+
+  let count = 0;
+
+  // 1. Блок «Уже есть дома» — сверху, мелким шрифтом
+  if (pantryItems.length) {
+    const li = document.createElement("li");
+    li.className = "shopping__pantry";
+    li.innerHTML =
+      '<span class="shopping__pantry-label">Уже есть дома:</span> ' +
+      pantryItems.map((e) => esc(e.name)).join(", ");
+    list.appendChild(li);
+  }
+
+  // 2. Группы по категориям
+  for (const [cat, items] of groups) {
+    const header = document.createElement("li");
+    header.className = "shopping__group";
+    header.textContent = cat;
+    list.appendChild(header);
+    for (const entry of items) {
+      list.appendChild(renderShoppingItem(entry));
+      count++;
+    }
+  }
+
+  // 3. Не найденные в справочнике — подсвечены
+  if (unknownItems.length) {
+    const header = document.createElement("li");
+    header.className = "shopping__group";
+    header.textContent = "Не найдено в справочнике";
+    list.appendChild(header);
+    for (const entry of unknownItems) {
+      const item = renderShoppingItem(entry);
+      item.classList.add("is-unknown");
+      list.appendChild(item);
+      count++;
+    }
+  }
+
+  empty.hidden = count > 0 || pantryItems.length > 0;
+  list.hidden = count === 0 && pantryItems.length === 0;
 }
 
 /* ----------------------------------------------------------
