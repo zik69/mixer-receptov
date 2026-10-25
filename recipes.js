@@ -6,7 +6,8 @@ const RECIPES = [
   {
     id: 1,
     title: "Омлет с сыром и помидорами",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -29,7 +30,8 @@ const RECIPES = [
   {
     id: 2,
     title: "Сырники из творога",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 3,
     ingredients: [
@@ -51,7 +53,8 @@ const RECIPES = [
   {
     id: 3,
     title: "Блинчики с творогом",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -75,7 +78,8 @@ const RECIPES = [
   {
     id: 4,
     title: "Яичница с беконом и гренками",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -95,7 +99,8 @@ const RECIPES = [
   {
     id: 5,
     title: "Овсянка с бананом и мёдом",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -116,7 +121,8 @@ const RECIPES = [
   {
     id: 6,
     title: "Тосты с авокадо и яйцом",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -138,7 +144,8 @@ const RECIPES = [
   {
     id: 7,
     title: "Гречневая каша с молоком",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -162,7 +169,8 @@ const RECIPES = [
   {
     id: 8,
     title: "Суп с макаронами и курицей",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -188,7 +196,8 @@ const RECIPES = [
   {
     id: 9,
     title: "Быстрый борщ на готовой фасоли",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -215,7 +224,8 @@ const RECIPES = [
   {
     id: 10,
     title: "Гречка с говядиной",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -239,7 +249,8 @@ const RECIPES = [
   {
     id: 11,
     title: "Пельмени со сметаной",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 20,
     servings: 3,
     ingredients: [
@@ -261,7 +272,8 @@ const RECIPES = [
   {
     id: 12,
     title: "Макароны по-флотски",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 25,
     servings: 3,
     ingredients: [
@@ -284,7 +296,8 @@ const RECIPES = [
   {
     id: 13,
     title: "Картофельный суп с фрикадельками",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -310,7 +323,8 @@ const RECIPES = [
   {
     id: 14,
     title: "Куриный бульон с яйцом и зеленью",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 25,
     servings: 3,
     ingredients: [
@@ -336,7 +350,8 @@ const RECIPES = [
   {
     id: 15,
     title: "Макароны с курицей и овощами",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -360,7 +375,8 @@ const RECIPES = [
   {
     id: 16,
     title: "Рис с овощами и курицей",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -385,7 +401,8 @@ const RECIPES = [
   {
     id: 17,
     title: "Картофельное пюре с котлетой",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -411,7 +428,8 @@ const RECIPES = [
   {
     id: 18,
     title: "Куриные наггетсы с салатом",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -437,7 +455,8 @@ const RECIPES = [
   {
     id: 19,
     title: "Пицца на готовом тесте",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -459,7 +478,8 @@ const RECIPES = [
   {
     id: 20,
     title: "Тушёная капуста с сосисками",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 25,
     servings: 3,
     ingredients: [
@@ -483,7 +503,8 @@ const RECIPES = [
   {
     id: 21,
     title: "Куриные стрипсы с картофелем фри",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -507,7 +528,8 @@ const RECIPES = [
   {
     id: 22,
     title: "Рыбные котлеты с рисом",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -535,7 +557,8 @@ const RECIPES = [
   {
     id: 23,
     title: "Салат из свежих овощей",
-    category: "перекус",`n    cuisine: "обычная",
+    category: "перекус",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -558,7 +581,8 @@ const RECIPES = [
   {
     id: 24,
     title: "Бутерброды с сыром и ветчиной",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -579,7 +603,8 @@ const RECIPES = [
   {
     id: 25,
     title: "Фруктовый салат с йогуртом",
-    category: "перекус",`n    cuisine: "обычная",
+    category: "перекус",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -600,7 +625,8 @@ const RECIPES = [
   {
     id: 26,
     title: "Брускетта с помидорами",
-    category: "перекус",`n    cuisine: "обычная",
+    category: "перекус",
+    cuisine: "обычная",
     time: 20,
     servings: 3,
     ingredients: [
@@ -622,7 +648,8 @@ const RECIPES = [
   {
     id: 27,
     title: "Лаваш с курицей и овощами",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -645,7 +672,8 @@ const RECIPES = [
   {
     id: 28,
     title: "Творог с мёдом и орехами",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -665,7 +693,8 @@ const RECIPES = [
   {
     id: 29,
     title: "Яичница с помидорами и сыром",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -687,7 +716,8 @@ const RECIPES = [
   {
     id: 30,
     title: "Каша манная с ягодами",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -709,7 +739,8 @@ const RECIPES = [
   {
     id: 31,
     title: "Гречневая каша с яйцом",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -730,7 +761,8 @@ const RECIPES = [
   {
     id: 32,
     title: "Творожная запеканка",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -753,7 +785,8 @@ const RECIPES = [
   {
     id: 33,
     title: "Омлет с ветчиной и сыром",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -775,7 +808,8 @@ const RECIPES = [
   {
     id: 34,
     title: "Блинчики с яблоком",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 3,
     ingredients: [
@@ -798,7 +832,8 @@ const RECIPES = [
   {
     id: 35,
     title: "Яйца пашот на тосте",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -819,7 +854,8 @@ const RECIPES = [
   {
     id: 36,
     title: "Овсянка с яблоком и корицей",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -841,7 +877,8 @@ const RECIPES = [
   {
     id: 37,
     title: "Сэндвич с яйцом и сыром",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -862,7 +899,8 @@ const RECIPES = [
   {
     id: 38,
     title: "Рисовая каша с тыквой",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -884,7 +922,8 @@ const RECIPES = [
   {
     id: 39,
     title: "Омлет с грибами",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -906,7 +945,8 @@ const RECIPES = [
   {
     id: 40,
     title: "Творожные оладьи",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 3,
     ingredients: [
@@ -929,7 +969,8 @@ const RECIPES = [
   {
     id: 41,
     title: "Яйца, фаршированные сыром",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -950,7 +991,8 @@ const RECIPES = [
   {
     id: 42,
     title: "Каша пшённая с тыквой",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 30,
     servings: 2,
     ingredients: [
@@ -972,7 +1014,8 @@ const RECIPES = [
   {
     id: 43,
     title: "Тосты с творогом и мёдом",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -992,7 +1035,8 @@ const RECIPES = [
   {
     id: 44,
     title: "Омлет с брокколи",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -1014,7 +1058,8 @@ const RECIPES = [
   {
     id: 45,
     title: "Каша рисовая с яблоком",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -1036,7 +1081,8 @@ const RECIPES = [
   {
     id: 46,
     title: "Яичница с сосисками",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -1056,7 +1102,8 @@ const RECIPES = [
   {
     id: 47,
     title: "Каша гречневая с грибами",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -1077,7 +1124,8 @@ const RECIPES = [
   {
     id: 48,
     title: "Творог с фруктами и мёдом",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -1098,7 +1146,8 @@ const RECIPES = [
   {
     id: 49,
     title: "Омлет с кабачком",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -1120,7 +1169,8 @@ const RECIPES = [
   {
     id: 50,
     title: "Каша овсяная с орехами",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -1141,7 +1191,8 @@ const RECIPES = [
   {
     id: 51,
     title: "Яйца с зеленью и сыром",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 20,
     servings: 2,
     ingredients: [
@@ -1162,7 +1213,8 @@ const RECIPES = [
   {
     id: 52,
     title: "Блинчики с бананом и шоколадом",
-    category: "завтрак",`n    cuisine: "обычная",
+    category: "завтрак",
+    cuisine: "обычная",
     time: 25,
     servings: 3,
     ingredients: [
@@ -1186,7 +1238,8 @@ const RECIPES = [
   {
     id: 53,
     title: "Суп гороховый с копчёностями",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1210,7 +1263,8 @@ const RECIPES = [
   {
     id: 54,
     title: "Суп с фрикадельками и рисом",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1234,7 +1288,8 @@ const RECIPES = [
   {
     id: 55,
     title: "Борщ с говядиной",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1261,7 +1316,8 @@ const RECIPES = [
   {
     id: 56,
     title: "Солянка мясная",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1288,7 +1344,8 @@ const RECIPES = [
   {
     id: 57,
     title: "Суп с курицей и лапшой",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1312,7 +1369,8 @@ const RECIPES = [
   {
     id: 58,
     title: "Рассольник с почками",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1337,7 +1395,8 @@ const RECIPES = [
   {
     id: 59,
     title: "Суп с фасолью и курицей",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1362,7 +1421,8 @@ const RECIPES = [
   {
     id: 60,
     title: "Суп с грибами и перловкой",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1386,7 +1446,8 @@ const RECIPES = [
   {
     id: 61,
     title: "Суп с курицей и кукурузой",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1410,7 +1471,8 @@ const RECIPES = [
   {
     id: 62,
     title: "Суп с фрикадельками и овощами",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1435,7 +1497,8 @@ const RECIPES = [
   {
     id: 63,
     title: "Суп с курицей и кабачком",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1459,7 +1522,8 @@ const RECIPES = [
   {
     id: 64,
     title: "Суп с говядиной и овощами",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1484,7 +1548,8 @@ const RECIPES = [
   {
     id: 65,
     title: "Суп с курицей и шпинатом",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1508,7 +1573,8 @@ const RECIPES = [
   {
     id: 66,
     title: "Суп с говядиной и гречкой",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1532,7 +1598,8 @@ const RECIPES = [
   {
     id: 67,
     title: "Суп с курицей и тыквой",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1556,7 +1623,8 @@ const RECIPES = [
   {
     id: 68,
     title: "Суп с говядиной и капустой",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1581,7 +1649,8 @@ const RECIPES = [
   {
     id: 69,
     title: "Суп с курицей и брокколи",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1605,7 +1674,8 @@ const RECIPES = [
   {
     id: 70,
     title: "Суп с говядиной и грибами",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1629,7 +1699,8 @@ const RECIPES = [
   {
     id: 71,
     title: "Суп с курицей и рисом",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1653,7 +1724,8 @@ const RECIPES = [
   {
     id: 72,
     title: "Суп с говядиной и фасолью",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1678,7 +1750,8 @@ const RECIPES = [
   {
     id: 73,
     title: "Суп с курицей и кукурузой",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1702,7 +1775,8 @@ const RECIPES = [
   {
     id: 74,
     title: "Суп с говядиной и картофелем",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1726,7 +1800,8 @@ const RECIPES = [
   {
     id: 75,
     title: "Суп с курицей и макаронами",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1750,7 +1825,8 @@ const RECIPES = [
   {
     id: 76,
     title: "Суп с говядиной и рисом",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1774,7 +1850,8 @@ const RECIPES = [
   {
     id: 77,
     title: "Суп с курицей и капустой",
-    category: "обед",`n    cuisine: "обычная",
+    category: "обед",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1799,7 +1876,8 @@ const RECIPES = [
   {
     id: 78,
     title: "Курица в духовке с картошкой",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1822,7 +1900,8 @@ const RECIPES = [
   {
     id: 79,
     title: "Рыба с овощами в духовке",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 2,
     ingredients: [
@@ -1845,7 +1924,8 @@ const RECIPES = [
   {
     id: 80,
     title: "Паста с болоньезом",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1870,7 +1950,8 @@ const RECIPES = [
   {
     id: 81,
     title: "Плов с курицей",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 4,
     ingredients: [
@@ -1894,7 +1975,8 @@ const RECIPES = [
   {
     id: 82,
     title: "Овощное рагу с мясом",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1919,7 +2001,8 @@ const RECIPES = [
   {
     id: 83,
     title: "Куриные котлеты с гречкой",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1943,7 +2026,8 @@ const RECIPES = [
   {
     id: 84,
     title: "Рыбные котлеты с картофелем",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -1967,7 +2051,8 @@ const RECIPES = [
   {
     id: 85,
     title: "Курица в сливочном соусе",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -1990,7 +2075,8 @@ const RECIPES = [
   {
     id: 86,
     title: "Говядина с картофелем в горшочках",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 2,
     ingredients: [
@@ -2013,7 +2099,8 @@ const RECIPES = [
   {
     id: 87,
     title: "Курица с рисом и овощами",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -2037,7 +2124,8 @@ const RECIPES = [
   {
     id: 88,
     title: "Говядина с гречкой",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -2060,7 +2148,8 @@ const RECIPES = [
   {
     id: 89,
     title: "Куриные стрипсы с овощами",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -2083,7 +2172,8 @@ const RECIPES = [
   {
     id: 90,
     title: "Рыба с картофелем в духовке",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 2,
     ingredients: [
@@ -2105,7 +2195,8 @@ const RECIPES = [
   {
     id: 91,
     title: "Курица с овощами на сковороде",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 25,
     servings: 2,
     ingredients: [
@@ -2128,7 +2219,8 @@ const RECIPES = [
   {
     id: 92,
     title: "Говядина с картофелем и грибами",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -2151,7 +2243,8 @@ const RECIPES = [
   {
     id: 93,
     title: "Курица с гречкой и овощами",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -2175,7 +2268,8 @@ const RECIPES = [
   {
     id: 94,
     title: "Рыба с рисом и овощами",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 2,
     ingredients: [
@@ -2199,7 +2293,8 @@ const RECIPES = [
   {
     id: 95,
     title: "Говядина с рисом и овощами",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -2223,7 +2318,8 @@ const RECIPES = [
   {
     id: 96,
     title: "Курица с картофелем и грибами",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -2246,7 +2342,8 @@ const RECIPES = [
   {
     id: 97,
     title: "Говядина с капустой и картофелем",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -2270,7 +2367,8 @@ const RECIPES = [
   {
     id: 98,
     title: "Курица с брокколи и рисом",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 2,
     ingredients: [
@@ -2294,7 +2392,8 @@ const RECIPES = [
   {
     id: 99,
     title: "Говядина с перцем и рисом",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
@@ -2318,7 +2417,8 @@ const RECIPES = [
   {
     id: 100,
     title: "Курица с картофелем и перцем",
-    category: "ужин",`n    cuisine: "обычная",
+    category: "ужин",
+    cuisine: "обычная",
     time: 30,
     servings: 3,
     ingredients: [
