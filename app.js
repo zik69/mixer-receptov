@@ -573,7 +573,8 @@ function mergeIngredients(checkedRecipes) {
   return map;
 }
 
-function renderShoppingItem(entry) {
+function renderShoppingItem(entry, suffix) {
+  suffix = suffix || "";
   const li = document.createElement("li");
   const key = entry.db ? "id:" + entry.db.id : "unknown:" + norm(entry.name);
 
@@ -626,8 +627,8 @@ function renderShoppingItem(entry) {
   }
 
   li.innerHTML = `
-    <input type="checkbox" id="buy-${key}" data-key="${key}">
-    <label for="buy-${key}">${esc(entry.name)}</label>
+    <input type="checkbox" id="buy-${suffix}-${key}" data-key="${key}">
+    <label for="buy-${suffix}-${key}">${esc(entry.name)}</label>
     <div class="shopping__right">
       <span class="ingredients__amount">${esc(amountDisplay)}</span>
       ${packStr ? `<span class="shopping__pack">${esc(packStr)}</span>` : ""}
@@ -689,8 +690,8 @@ async function fetchLentaItems(query) {
 }
 
 async function updateLentaPrices() {
-  const btn = document.getElementById("lenta-update-btn");
-  if (btn) { btn.disabled = true; btn.textContent = "Загрузка..."; }
+  const btns = [document.getElementById("lenta-update-btn"), document.getElementById("lenta-update-btn-all")].filter(Boolean);
+  btns.forEach((b) => { b.disabled = true; b.textContent = "Загрузка..."; });
   const chosen = state.current.map(getRecipe).filter((r) => r && state.checked.includes(r.id));
   const merged = mergeIngredients(chosen);
   const unique = [...new Set([...merged.values()].map((e) => e.name))];
@@ -705,14 +706,12 @@ async function updateLentaPrices() {
     }
   });
   await Promise.all(fetches);
-  if (btn) { btn.disabled = false; btn.textContent = "Обновить цены"; }
+  btns.forEach((b) => { b.disabled = false; b.textContent = "Обновить цены"; });
   renderShoppingList();
 }
 
 function updateLentaTotal() {
-  const el = document.getElementById("shopping-total");
-  if (!el) return;
-  const chosen = state.current.map(getRecipe).filter((r) => r && state.checked.includes(r.id));
+  const chosen = state.checked.map(getRecipe).filter((r) => r);
   const merged = mergeIngredients(chosen);
   let total = 0;
   let hasAny = false;
@@ -731,17 +730,23 @@ function updateLentaTotal() {
     }
     total += sel.price * packs;
   }
-  if (hasAny) {
-    el.textContent = "Итого (по выбранным ценам): " + total.toFixed(2) + " ₽";
-    el.hidden = false;
-  } else {
-    el.hidden = true;
-  }
+  ["", "-all"].forEach((suf) => {
+    const el = document.getElementById("shopping-total" + suf);
+    if (!el) return;
+    if (hasAny) {
+      el.textContent = "Итого (по выбранным ценам): " + total.toFixed(2) + " ₽";
+      el.hidden = false;
+    } else {
+      el.hidden = true;
+    }
+  });
 }
 
-function renderShoppingList() {
-  const list = document.getElementById("shopping-list");
-  const empty = document.getElementById("shopping-empty");
+function renderShoppingListTo(suffix) {
+  suffix = suffix || "";
+  const list = document.getElementById("shopping-list" + suffix);
+  const empty = document.getElementById("shopping-empty" + suffix);
+  if (!list) return;
   list.innerHTML = "";
 
   // Корзина собирается из всех отмеченных рецептов (и с главной, и из «Все рецепты»)
@@ -791,7 +796,7 @@ function renderShoppingList() {
     header.textContent = cat;
     list.appendChild(header);
     for (const entry of items) {
-      list.appendChild(renderShoppingItem(entry));
+      list.appendChild(renderShoppingItem(entry, suffix));
       count++;
     }
   }
@@ -813,6 +818,11 @@ function renderShoppingList() {
   empty.hidden = count > 0 || pantryItems.length > 0;
   list.hidden = count === 0 && pantryItems.length === 0;
   updateLentaTotal();
+}
+
+function renderShoppingList() {
+  renderShoppingListTo("");
+  renderShoppingListTo("-all");
 }
 
 /* ----------------------------------------------------------
@@ -952,6 +962,7 @@ function initAllRecipesScreen() {
     if (searchInput) searchInput.value = "";
     catButtons.forEach((b) => b.classList.toggle("is-active", b.dataset.cat === "all"));
     renderAllRecipes();
+    renderShoppingList();
   });
 
   if (backBtn) {
@@ -960,6 +971,17 @@ function initAllRecipesScreen() {
       document.body.style.overflow = "";
     });
   }
+
+  const scrollCartBtn = document.getElementById("scroll-to-cart-btn");
+  if (scrollCartBtn) {
+    scrollCartBtn.addEventListener("click", () => {
+      const sec = document.querySelector(".shopping--in-all");
+      if (sec) sec.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }
+
+  const lentaAllBtn = document.getElementById("lenta-update-btn-all");
+  if (lentaAllBtn) lentaAllBtn.addEventListener("click", () => { updateLentaPrices(); });
 
   if (searchInput) {
     searchInput.addEventListener("input", () => {

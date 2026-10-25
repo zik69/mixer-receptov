@@ -112,6 +112,7 @@
       <div class="all-recipes-screen__head">
         <button type="button" id="all-recipes-back" class="link-btn">← Назад</button>
         <h2 class="all-recipes-screen__title">Все рецепты</h2>
+        <button type="button" id="scroll-to-cart-btn" class="link-btn">К корзине ↓</button>
       </div>
       <div class="all-recipes-screen__filters">
         <input type="search" id="recipe-search" class="all-recipes-screen__search" placeholder="Поиск по названию">
@@ -123,6 +124,21 @@
         </div>
       </div>
       <div class="cards all-recipes-screen__cards" id="all-recipes-cards"></div>
+
+      <section class="shopping shopping--in-all">
+        <div class="shopping__head">
+          <h2 class="section-title">
+            <span class="section-title__dot section-title__dot--buy" aria-hidden="true"></span>
+            Корзина (список покупок)
+          </h2>
+          <button type="button" id="lenta-update-btn-all" class="link-btn">Обновить цены</button>
+        </div>
+        <ul class="shopping__list" id="shopping-list-all"></ul>
+        <p class="shopping__empty" id="shopping-empty-all">
+          Отметьте «Добавлю в покупки» у рецептов — и здесь появится список.
+        </p>
+        <p class="shopping__total" id="shopping-total-all" hidden></p>
+      </section>
     </div>
   </div>
 
