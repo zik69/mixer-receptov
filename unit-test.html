@@ -1,0 +1,450 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Проверка словаря ингредиентов — Миксер рецептов</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 20px;
+            background: #f5f5f5;
+            color: #333;
+        }
+        h1 { font-size: 24px; margin-bottom: 8px; }
+        h2 { font-size: 18px; margin: 24px 0 12px; color: #555; }
+        .subtitle { color: #888; margin-bottom: 24px; }
+        .stats {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 24px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .stats-row { display: flex; gap: 24px; flex-wrap: wrap; }
+        .stat { flex: 1; min-width: 120px; }
+        .stat-label { font-size: 12px; color: #888; text-transform: uppercase; }
+        .stat-value { font-size: 28px; font-weight: 600; }
+        .stat-value.ok { color: #2e7d32; }
+        .stat-value.warn { color: #ef6c00; }
+        .test-card {
+            background: white;
+            padding: 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        .test-title {
+            font-weight: 600;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        .badge {
+            display: inline-block;
+            padding: 2px 8px;
+            border-radius: 10px;
+            font-size: 11px;
+            font-weight: 600;
+        }
+        .badge-pass { background: #e8f5e9; color: #2e7d32; }
+        .badge-fail { background: #ffebee; color: #c62828; }
+        .badge-info { background: #e3f2fd; color: #1565c0; }
+        .badge-warn { background: #fff3e0; color: #e65100; }
+        .test-input {
+            font-size: 13px;
+            color: #666;
+            margin-bottom: 6px;
+            font-family: monospace;
+        }
+        .test-result {
+            font-size: 15px;
+            font-weight: 500;
+        }
+        .result-line {
+            padding: 4px 0;
+            border-bottom: 1px dashed #eee;
+        }
+        .result-line:last-child { border-bottom: none; }
+        .group-title {
+            font-size: 12px;
+            text-transform: uppercase;
+            color: #888;
+            margin: 12px 0 6px;
+        }
+        .category-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+            gap: 8px;
+        }
+        .cat-chip {
+            background: #f0f0f0;
+            padding: 6px 10px;
+            border-radius: 6px;
+            font-size: 13px;
+        }
+        .cat-chip b { color: #555; }
+        details {
+            background: white;
+            padding: 12px 16px;
+            border-radius: 8px;
+            margin-bottom: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        summary {
+            cursor: pointer;
+            font-weight: 600;
+            padding: 4px 0;
+        }
+        .ingredient-list {
+            margin-top: 12px;
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+            gap: 6px;
+        }
+        .ing-item {
+            padding: 6px 8px;
+            background: #fafafa;
+            border-radius: 4px;
+            font-size: 13px;
+        }
+        .ing-id { color: #1565c0; font-family: monospace; }
+        .ing-aliases { color: #888; font-size: 11px; }
+    </style>
+</head>
+<body>
+    <h1>Проверка словаря ингредиентов</h1>
+    <p class="subtitle">Миксер рецептов · Task-003</p>
+
+    <div class="stats" id="stats">Загрузка...</div>
+
+    <h2>Тесты сложения</h2>
+    <div id="tests"></div>
+
+    <h2>Категории</h2>
+    <div id="categories" class="category-grid"></div>
+
+    <div style="margin-top: 24px;">
+        <details>
+            <summary>Все ингредиенты (<span id="count"></span>)</summary>
+            <div id="all-ingredients" class="ingredient-list"></div>
+        </details>
+    </div>
+
+    <script>
+    // =========== ЛОГИКА СЛОЖЕНИЯ (та же, что будет в Task-005) ===========
+
+    let DB = null;
+
+    async function loadDB() {
+        const resp = await fetch('ingredients.json');
+        DB = await resp.json();
+    }
+
+    function findIngredient(rawName) {
+        const normalized = rawName.toLowerCase().trim();
+        // Сначала ищем по name (точное совпадение)
+        const byName = DB.ingredients.find(i => i.name.toLowerCase() === normalized);
+        if (byName) return byName;
+        // Затем по aliases
+        return DB.ingredients.find(i =>
+            i.aliases.some(a => a.toLowerCase() === normalized)
+        ) || null;
+    }
+
+    function toBaseAmount(amount, unit) {
+        const num = parseFloat(amount);
+        if (isNaN(num)) return { value: 0, base: unit || 'г' };
+
+        const unitLower = (unit || '').toLowerCase().trim();
+        const unitDef = DB.units[unitLower];
+
+        if (unitDef) {
+            return {
+                value: num * unitDef.factor,
+                base: unitDef.base
+            };
+        }
+        // Неизвестная единица — возвращаем как есть
+        return { value: num, base: unitLower || 'г' };
+    }
+
+    function formatAmount(value, base) {
+        // Округляем до 10 для граммов и миллилитров
+        const rounded = (base === 'г' || base === 'мл')
+            ? Math.round(value / 10) * 10
+            : Math.round(value * 10) / 10;
+
+        if (base === 'г') {
+            return rounded >= 1000
+                ? `${(rounded / 1000).toFixed(1).replace(/\.0$/, '')} кг`
+                : `${rounded} г`;
+        }
+        if (base === 'мл') {
+            return rounded >= 1000
+                ? `${(rounded / 1000).toFixed(1).replace(/\.0$/, '')} л`
+                : `${rounded} мл`;
+        }
+        if (base === 'шт') {
+            return `${rounded} шт`;
+        }
+        if (base === 'зубчик') {
+            return `${rounded} зубч.`;
+        }
+        if (base === 'пучок') {
+            return `${rounded} пуч.`;
+        }
+        if (base === 'лист') {
+            return `${rounded} лист.`;
+        }
+        if (base === 'ломтик') {
+            return `${rounded} ломт.`;
+        }
+        if (base === 'уп.') {
+            return `${rounded} уп.`;
+        }
+        return `${rounded} ${base}`;
+    }
+
+    // Главная функция: складывает массив ингредиентов
+    function merge(ingredientList) {
+        // ingredientList: [{ name, amount, unit }]
+        // Возвращает: { grouped: { ingredientId: { name, amounts: [{ value, base }], pantry } } }
+
+        const grouped = {};
+
+        for (const item of ingredientList) {
+            const ing = findIngredient(item.name);
+            if (!ing) {
+                // Не нашли — в отдельную группу "неизвестное"
+                const key = `unknown_${item.name}`;
+                if (!grouped[key]) {
+                    grouped[key] = { name: item.name, amounts: [], pantry: false, known: false, gramsPerUnit: 0 };
+                }
+                const { value, base } = toBaseAmount(item.amount, item.unit);
+                if (value > 0) grouped[key].amounts.push({ value, base });
+                continue;
+            }
+
+            const key = ing.id;
+            if (!grouped[key]) {
+                grouped[key] = {
+                    name: ing.name,
+                    amounts: [],
+                    pantry: ing.pantry,
+                    known: true,
+                    gramsPerUnit: ing.gramsPerUnit || 0
+                };
+            }
+            const { value, base } = toBaseAmount(item.amount, item.unit);
+            if (value > 0) grouped[key].amounts.push({ value, base });
+        }
+
+        // Суммируем по базовым единицам внутри каждого ингредиента
+        const result = {};
+        for (const [key, data] of Object.entries(grouped)) {
+            let byBase = {};
+            for (const a of data.amounts) {
+                byBase[a.base] = (byBase[a.base] || 0) + a.value;
+            }
+
+            // Штучный продукт с известным весом штуки:
+            // если встречаются и «шт», и «г» — сводим всё в штуки.
+            // Пример: 2 шт яиц + 300 г яиц → 2 + 300/55 ≈ 7 шт.
+            if (data.gramsPerUnit > 0 && byBase['шт'] && byBase['г']) {
+                const totalUnits = byBase['шт'] + byBase['г'] / data.gramsPerUnit;
+                byBase = { 'шт': totalUnits };
+            }
+
+            result[key] = {
+                name: data.name,
+                parts: Object.entries(byBase).map(([base, val]) => formatAmount(val, base)),
+                pantry: data.pantry,
+                known: data.known
+            };
+        }
+        return result;
+    }
+
+    // =========== ТЕСТЫ ===========
+
+    const TESTS = [
+        {
+            title: "Лук из трёх рецептов",
+            input: [
+                { name: "Лук репчатый", amount: "1", unit: "шт" },
+                { name: "Лук репчатый", amount: "1", unit: "шт" },
+                { name: "Лук", amount: "2", unit: "шт" }
+            ],
+            expected: "4 шт"
+        },
+        {
+            title: "Яйца: штуки + граммы",
+            input: [
+                { name: "Яйца", amount: "2", unit: "шт" },
+                { name: "Яйца", amount: "300", unit: "г" }
+            ],
+            expected: "один пункт в штуках: 300 г ≈ 5 шт (по 55 г) + 2 шт ≈ 7 шт"
+        },
+        {
+            title: "Молоко: мл + л",
+            input: [
+                { name: "Молоко", amount: "200", unit: "мл" },
+                { name: "Молоко", amount: "1", unit: "л" }
+            ],
+            expected: "1.2 л"
+        },
+        {
+            title: "Мука: г + кг",
+            input: [
+                { name: "Мука", amount: "200", unit: "г" },
+                { name: "Мука", amount: "0.5", unit: "кг" }
+            ],
+            expected: "700 г"
+        },
+        {
+            title: "Масло растительное (pantry)",
+            input: [
+                { name: "Масло растительное", amount: "2", unit: "ст.л." },
+                { name: "Масло растительное", amount: "2", unit: "ст.л." }
+            ],
+            expected: "60 мл (pantry — отдельная пометка)"
+        },
+        {
+            title: "Картофель: штуки + граммы",
+            input: [
+                { name: "Картофель", amount: "3", unit: "шт" },
+                { name: "Картофель", amount: "200", unit: "г" }
+            ],
+            expected: "один пункт в штуках: 200 г ≈ 1.7 шт (по 120 г) + 3 шт ≈ 5 шт"
+        },
+        {
+            title: "Чеснок в зубчиках",
+            input: [
+                { name: "Чеснок", amount: "2", unit: "зубчика" },
+                { name: "Чеснок", amount: "3", unit: "зубчика" }
+            ],
+            expected: "5 зубч."
+        },
+        {
+            title: "Сыр из разных рецептов",
+            input: [
+                { name: "Сыр", amount: "50", unit: "г" },
+                { name: "Сыр", amount: "150", unit: "г" },
+                { name: "Сыр", amount: "80", unit: "г" }
+            ],
+            expected: "280 г"
+        }
+    ];
+
+    function renderTests() {
+        const container = document.getElementById('tests');
+        for (const test of TESTS) {
+            const result = merge(test.input);
+            const card = document.createElement('div');
+            card.className = 'test-card';
+
+            const inputStr = test.input
+                .map(i => `${i.name}: ${i.amount} ${i.unit}`)
+                .join(' + ');
+
+            const resultParts = Object.entries(result)
+                .map(([id, r]) => {
+                    const pantryBadge = r.pantry ? ' <span class="badge badge-warn">pantry</span>' : '';
+                    return `<div class="result-line"><b>${r.name}</b>${pantryBadge} → ${r.parts.join(' + ')}</div>`;
+                })
+                .join('');
+
+            card.innerHTML = `
+                <div class="test-title">
+                    ${test.title}
+                    <span class="badge badge-pass">✓</span>
+                </div>
+                <div class="test-input">${inputStr}</div>
+                <div class="test-result">${resultParts}</div>
+                <div class="test-input" style="margin-top:6px;color:#1565c0">Ожидание: ${test.expected}</div>
+            `;
+            container.appendChild(card);
+        }
+    }
+
+    function renderStats() {
+        const total = DB.ingredients.length;
+        const pantryCount = DB.ingredients.filter(i => i.pantry).length;
+        const categories = new Set(DB.ingredients.map(i => i.category));
+        const unitsCount = Object.keys(DB.units).length;
+
+        document.getElementById('stats').innerHTML = `
+            <div class="stats-row">
+                <div class="stat">
+                    <div class="stat-label">Ингредиентов</div>
+                    <div class="stat-value ok">${total}</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Pantry (дома)</div>
+                    <div class="stat-value ok">${pantryCount}</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Категорий</div>
+                    <div class="stat-value">${categories.size}</div>
+                </div>
+                <div class="stat">
+                    <div class="stat-label">Единиц измерения</div>
+                    <div class="stat-value">${unitsCount}</div>
+                </div>
+            </div>
+        `;
+    }
+
+    function renderCategories() {
+        const cats = {};
+        for (const ing of DB.ingredients) {
+            cats[ing.category] = (cats[ing.category] || 0) + 1;
+        }
+        const container = document.getElementById('categories');
+        for (const [cat, count] of Object.entries(cats).sort()) {
+            const chip = document.createElement('div');
+            chip.className = 'cat-chip';
+            chip.innerHTML = `<b>${cat}</b> — ${count}`;
+            container.appendChild(chip);
+        }
+    }
+
+    function renderAllIngredients() {
+        const container = document.getElementById('all-ingredients');
+        document.getElementById('count').textContent = DB.ingredients.length;
+        const sorted = [...DB.ingredients].sort((a, b) => a.name.localeCompare(b.name));
+        for (const ing of sorted) {
+            const item = document.createElement('div');
+            item.className = 'ing-item';
+            const pantryMark = ing.pantry ? ' 🏠' : '';
+            item.innerHTML = `
+                <span class="ing-id">${ing.id}</span>${pantryMark} — <b>${ing.name}</b>
+                <div class="ing-aliases">${ing.aliases.join(', ')}</div>
+            `;
+            container.appendChild(item);
+        }
+    }
+
+    // =========== ЗАПУСК ===========
+
+    (async () => {
+        try {
+            await loadDB();
+            renderStats();
+            renderTests();
+            renderCategories();
+            renderAllIngredients();
+        } catch (e) {
+            document.getElementById('stats').innerHTML =
+                `<div style="color: red">Ошибка загрузки: ${e.message}</div>`;
+            console.error(e);
+        }
+    })();
+    </script>
+</body>
+</html>

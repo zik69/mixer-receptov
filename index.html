@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Миксер рецептов</title>
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+  <header class="header">
+    <div class="header__inner">
+      <h1 class="header__title">Миксер рецептов</h1>
+      <p class="header__hint">Простые рецепты на 20–30 минут</p>
+    </div>
+  </header>
+
+  <div class="controls">
+    <div class="controls__inner">
+      <button type="button" id="mix-btn" class="mix-btn">
+        <span class="mix-btn__icon" aria-hidden="true">✦</span>
+        Мешать
+      </button>
+    </div>
+  </div>
+
+  <div class="settings">
+    <div class="settings__inner">
+      <p class="settings__hint" id="mix-hint">2 завтрака · 2 обеда · 2 ужина</p>
+      <div class="count-toggle" role="group" aria-label="Сколько рецептов из каждой категории">
+        <button type="button" class="count-toggle__btn is-active" data-count="2" aria-pressed="true">2</button>
+        <button type="button" class="count-toggle__btn" data-count="3" aria-pressed="false">3</button>
+      </div>
+    </div>
+    <p class="settings__warn" id="mix-warn" hidden></p>
+  </div>
+
+  <main class="main">
+
+    <div class="menu">
+
+      <section class="menu-group">
+        <h2 class="section-title">
+          <span class="section-title__dot section-title__dot--breakfast" aria-hidden="true"></span>
+          Завтраки
+        </h2>
+        <div class="cards" id="breakfast-cards"></div>
+      </section>
+
+      <section class="menu-group">
+        <h2 class="section-title">
+          <span class="section-title__dot section-title__dot--lunch" aria-hidden="true"></span>
+          Обеды
+        </h2>
+        <div class="cards" id="lunch-cards"></div>
+      </section>
+
+      <section class="menu-group">
+        <h2 class="section-title">
+          <span class="section-title__dot section-title__dot--dinner" aria-hidden="true"></span>
+          Ужины
+        </h2>
+        <div class="cards" id="dinner-cards"></div>
+      </section>
+
+    </div>
+
+    <section class="shopping">
+      <div class="shopping__head">
+        <h2 class="section-title">
+          <span class="section-title__dot section-title__dot--buy" aria-hidden="true"></span>
+          Список покупок
+        </h2>
+        <button type="button" id="clear-btn" class="link-btn">Снять отметки</button>
+      </div>
+      <ul class="shopping__list" id="shopping-list"></ul>
+      <p class="shopping__empty" id="shopping-empty">
+        Пока пусто. Отметь «Добавлю в покупки» у рецептов — и список соберётся сам.
+      </p>
+    </section>
+
+  </main>
+
+  <footer class="footer">
+    <div class="footer__inner">
+      <p>Миксер рецептов · готовим на 2 человек</p>
+    </div>
+  </footer>
+
+  <script src="recipes.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>

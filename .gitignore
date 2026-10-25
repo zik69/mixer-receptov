@@ -1,0 +1,12 @@
+# Инструментальная папка OpenCode
+.opencode/
+
+# Временные файлы
+*.tmp
+*.log
+*.bak
+
+# Системные файлы
+.DS_Store
+Thumbs.db
+desktop.ini
