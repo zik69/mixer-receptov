@@ -37,8 +37,12 @@ const state = {
   checked: [],        // id рецептов «Добавлю в покупки»
   bought: [],         // ключи купленных продуктов
   perCategory: 2,     // сколько рецептов в каждой категории
-  cuisine: "обычная"  // выбранная кухня: "обычная" или "китайская"
+  cuisine: "обычная",  // выбранная кухня: "обычная" или "китайская"
+  lentaPrices: {}     // выбранные цены Ленты: ключ norm(имя) -> { id, name, price }
 };
+
+// Кэш вариантов Ленты в памяти (не сохраняется): ключ norm(имя) -> массив товаров
+let lentaVariants = {};
 
 const expanded = new Set();  // id рецептов с раскрытыми шагами (не сохраняем)
 
@@ -268,6 +272,7 @@ function loadState() {
 
   if (data.perCategory === 2 || data.perCategory === 3) state.perCategory = data.perCategory;
   if (data.cuisine === "обычная" || data.cuisine === "китайская") state.cuisine = data.cuisine;
+  if (data.lentaPrices && typeof data.lentaPrices === "object") state.lentaPrices = data.lentaPrices;
 }
 
 /* ----------------------------------------------------------
@@ -602,12 +607,31 @@ function renderShoppingItem(entry) {
     }
   }
 
+  const variants = lentaVariants[norm(entry.name)] || [];
+  const selected = state.lentaPrices[norm(entry.name)] || null;
+  let priceHtml = "";
+  if (variants.length) {
+    const opts = variants.map((it) => {
+      const priceRub = (it.prices.price / 100).toFixed(2);
+      const sel = selected && selected.id === it.id ? " selected" : "";
+      return `<option value="${it.id}"${sel}>${esc(it.name)} — ${priceRub} ₽</option>`;
+    }).join("");
+    priceHtml = `<select class="shopping__price-select" data-name="${esc(entry.name)}">
+      <option value="">— цена —</option>
+      ${opts}
+    </select>`;
+  }
+  if (selected) {
+    priceHtml += ` <span class="shopping__price">${selected.price.toFixed(2)} ₽</span>`;
+  }
+
   li.innerHTML = `
     <input type="checkbox" id="buy-${key}" data-key="${key}">
     <label for="buy-${key}">${esc(entry.name)}</label>
     <div class="shopping__right">
       <span class="ingredients__amount">${esc(amountDisplay)}</span>
       ${packStr ? `<span class="shopping__pack">${esc(packStr)}</span>` : ""}
+      ${priceHtml}
     </div>
   `;
 
@@ -627,7 +651,62 @@ function renderShoppingItem(entry) {
     saveState();
   });
 
+  const priceSelect = li.querySelector(".shopping__price-select");
+  if (priceSelect) {
+    priceSelect.addEventListener("change", () => {
+      const id = Number(priceSelect.value);
+      if (!id) {
+        delete state.lentaPrices[norm(entry.name)];
+        saveState();
+        renderShoppingList();
+        return;
+      }
+      const item = variants.find((it) => it.id === id);
+      if (item) {
+        state.lentaPrices[norm(entry.name)] = {
+          id: item.id,
+          name: item.name,
+          price: item.prices.price / 100
+        };
+        saveState();
+        renderShoppingList();
+      }
+    });
+  }
+
   return li;
+}
+
+const LENTA_STORE_ID = 144;
+
+async function fetchLentaItems(query) {
+  const url = "https://integration.api.lenta.com/catalog/v1/items?stores=" + LENTA_STORE_ID +
+    "&channel=lo&retailBrand=lo&query=" + encodeURIComponent(query) + "&limit=8";
+  const res = await fetch(url, { headers: { Accept: "application/json" } });
+  if (!res.ok) return [];
+  const data = await res.json();
+  return Array.isArray(data.items) ? data.items : [];
+}
+
+async function updateLentaPrices() {
+  const btn = document.getElementById("lenta-update-btn");
+  if (btn) { btn.disabled = true; btn.textContent = "Загрузка..."; }
+  const chosen = state.current.map(getRecipe).filter((r) => r && state.checked.includes(r.id));
+  const merged = mergeIngredients(chosen);
+  const unique = [...new Set([...merged.values()].map((e) => e.name))];
+  const fetches = unique.map(async (name) => {
+    const db = findIngredient(name);
+    const q = db ? (db.lentaQuery || db.name) : name;
+    try {
+      const items = await fetchLentaItems(q);
+      lentaVariants[norm(name)] = items;
+    } catch (e) {
+      lentaVariants[norm(name)] = [];
+    }
+  });
+  await Promise.all(fetches);
+  if (btn) { btn.disabled = false; btn.textContent = "Обновить цены"; }
+  renderShoppingList();
 }
 
 function renderShoppingList() {
@@ -902,6 +981,9 @@ function initButtons() {
     saveState();
     renderShoppingList();
   });
+
+  const lentaBtn = document.getElementById("lenta-update-btn");
+  if (lentaBtn) lentaBtn.addEventListener("click", () => { updateLentaPrices(); });
 
   const resetBtn = document.getElementById("reset-btn");
   if (resetBtn) {
