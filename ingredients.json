@@ -2049,6 +2049,438 @@
         "unit": "упаковка",
         "size": 300
       }
+    },
+    {
+      "id": "бальзамический_уксус",
+      "name": "Бальзамический уксус",
+      "aliases": [
+        "Бальзамический уксус"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Бальзамический уксус",
+      "pack": null
+    },
+    {
+      "id": "барбарис",
+      "name": "Барбарис",
+      "aliases": [
+        "Барбарис"
+      ],
+      "category": "крупы и макароны",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Барбарис",
+      "pack": null
+    },
+    {
+      "id": "белое_сухое_вино",
+      "name": "Белое сухое вино",
+      "aliases": [
+        "Белое сухое вино"
+      ],
+      "category": "напитки",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Белое сухое вино",
+      "pack": null
+    },
+    {
+      "id": "булочка_для_бургера",
+      "name": "Булочка для бургера",
+      "aliases": [
+        "Булочка для бургера"
+      ],
+      "category": "крупы и макароны",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Булочка для бургера",
+      "pack": null
+    },
+    {
+      "id": "бульон",
+      "name": "Бульон",
+      "aliases": [
+        "Бульон"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Бульон",
+      "pack": null
+    },
+    {
+      "id": "бульон_куриный",
+      "name": "Бульон куриный",
+      "aliases": [
+        "Бульон куриный"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Бульон куриный",
+      "pack": null
+    },
+    {
+      "id": "бульон_овощной",
+      "name": "Бульон овощной",
+      "aliases": [
+        "Бульон овощной"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Бульон овощной",
+      "pack": null
+    },
+    {
+      "id": "вишня",
+      "name": "Вишня",
+      "aliases": [
+        "Вишня"
+      ],
+      "category": "фрукты и ягоды",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Вишня",
+      "pack": null
+    },
+    {
+      "id": "говядина_стейк",
+      "name": "Говядина (стейк)",
+      "aliases": [
+        "Говядина (стейк)"
+      ],
+      "category": "мясо и птица",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Говядина (стейк)",
+      "pack": null
+    },
+    {
+      "id": "желтки",
+      "name": "Желтки",
+      "aliases": [
+        "Желтки"
+      ],
+      "category": "молочное и яйца",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Желтки",
+      "pack": null
+    },
+    {
+      "id": "зира",
+      "name": "Зира",
+      "aliases": [
+        "Зира"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Зира",
+      "pack": null
+    },
+    {
+      "id": "капуста_квашеная",
+      "name": "Капуста квашеная",
+      "aliases": [
+        "Капуста квашеная"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Капуста квашеная",
+      "pack": null
+    },
+    {
+      "id": "кинза",
+      "name": "Кинза",
+      "aliases": [
+        "Кинза"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Кинза",
+      "pack": null
+    },
+    {
+      "id": "колбаса_копченая",
+      "name": "Колбаса копчёная",
+      "aliases": [
+        "Колбаса копчёная"
+      ],
+      "category": "мясо и птица",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Колбаса копчёная",
+      "pack": null
+    },
+    {
+      "id": "курица_целиком",
+      "name": "Курица целиком",
+      "aliases": [
+        "Курица целиком"
+      ],
+      "category": "мясо и птица",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Курица целиком",
+      "pack": null
+    },
+    {
+      "id": "куркума",
+      "name": "Куркума",
+      "aliases": [
+        "Куркума"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Куркума",
+      "pack": null
+    },
+    {
+      "id": "лапша_рамен",
+      "name": "Лапша рамен",
+      "aliases": [
+        "Лапша рамен"
+      ],
+      "category": "крупы и макароны",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Лапша рамен",
+      "pack": null
+    },
+    {
+      "id": "листы_лазаньи",
+      "name": "Листы лазаньи",
+      "aliases": [
+        "Листы лазаньи"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Листы лазаньи",
+      "pack": null
+    },
+    {
+      "id": "листья_лайма",
+      "name": "Листья лайма",
+      "aliases": [
+        "Листья лайма"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Листья лайма",
+      "pack": null
+    },
+    {
+      "id": "лосось_слабосоленый",
+      "name": "Лосось слабосолёный",
+      "aliases": [
+        "Лосось слабосолёный"
+      ],
+      "category": "рыба",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Лосось слабосолёный",
+      "pack": null
+    },
+    {
+      "id": "мидии",
+      "name": "Мидии",
+      "aliases": [
+        "Мидии"
+      ],
+      "category": "рыба",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Мидии",
+      "pack": null
+    },
+    {
+      "id": "миндаль",
+      "name": "Миндаль",
+      "aliases": [
+        "Миндаль"
+      ],
+      "category": "орехи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Миндаль",
+      "pack": null
+    },
+    {
+      "id": "пармезан",
+      "name": "Пармезан",
+      "aliases": [
+        "Пармезан"
+      ],
+      "category": "молочное и яйца",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Пармезан",
+      "pack": null
+    },
+    {
+      "id": "перец_чили",
+      "name": "Перец чили",
+      "aliases": [
+        "Перец чили"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Перец чили",
+      "pack": null
+    },
+    {
+      "id": "перец_чили_хлопья",
+      "name": "Перец чили хлопья",
+      "aliases": [
+        "Перец чили хлопья"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Перец чили хлопья",
+      "pack": null
+    },
+    {
+      "id": "рассол",
+      "name": "Рассол",
+      "aliases": [
+        "Рассол"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Рассол",
+      "pack": null
+    },
+    {
+      "id": "рис_арборио",
+      "name": "Рис арборио",
+      "aliases": [
+        "Рис арборио"
+      ],
+      "category": "крупы и макароны",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Рис арборио",
+      "pack": null
+    },
+    {
+      "id": "розмарин",
+      "name": "Розмарин",
+      "aliases": [
+        "Розмарин"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Розмарин",
+      "pack": null
+    },
+    {
+      "id": "сельдерей",
+      "name": "Сельдерей",
+      "aliases": [
+        "Сельдерей"
+      ],
+      "category": "овощи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Сельдерей",
+      "pack": null
+    },
+    {
+      "id": "семена_подсолнечника",
+      "name": "Семена подсолнечника",
+      "aliases": [
+        "Семена подсолнечника"
+      ],
+      "category": "орехи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Семена подсолнечника",
+      "pack": null
+    },
+    {
+      "id": "сок_лайма",
+      "name": "Сок лайма",
+      "aliases": [
+        "Сок лайма"
+      ],
+      "category": "фрукты и ягоды",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Сок лайма",
+      "pack": null
+    },
+    {
+      "id": "тыквенные_семечки",
+      "name": "Тыквенные семечки",
+      "aliases": [
+        "Тыквенные семечки"
+      ],
+      "category": "орехи",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Тыквенные семечки",
+      "pack": null
+    },
+    {
+      "id": "фета",
+      "name": "Фета",
+      "aliases": [
+        "Фета"
+      ],
+      "category": "молочное и яйца",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Фета",
+      "pack": null
+    },
+    {
+      "id": "филе_белой_рыбы",
+      "name": "Филе белой рыбы",
+      "aliases": [
+        "Филе белой рыбы"
+      ],
+      "category": "рыба",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Филе белой рыбы",
+      "pack": null
+    },
+    {
+      "id": "хлеб_для_тостов",
+      "name": "Хлеб для тостов",
+      "aliases": [
+        "Хлеб для тостов"
+      ],
+      "category": "крупы и макароны",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Хлеб для тостов",
+      "pack": null
+    },
+    {
+      "id": "ягоды",
+      "name": "Ягоды",
+      "aliases": [
+        "Ягоды"
+      ],
+      "category": "фрукты и ягоды",
+      "pantry": false,
+      "gramsPerUnit": 0,
+      "lentaQuery": "Ягоды",
+      "pack": null
     }
   ]
 }
