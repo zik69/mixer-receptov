@@ -816,3 +816,10 @@ button { font: inherit; color: inherit; }
   font-size: 14px;
   padding: 0;
 }
+
+.shopping__total {
+  margin: 12px 0 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--text);
+}

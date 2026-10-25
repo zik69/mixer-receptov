@@ -709,6 +709,36 @@ async function updateLentaPrices() {
   renderShoppingList();
 }
 
+function updateLentaTotal() {
+  const el = document.getElementById("shopping-total");
+  if (!el) return;
+  const chosen = state.current.map(getRecipe).filter((r) => r && state.checked.includes(r.id));
+  const merged = mergeIngredients(chosen);
+  let total = 0;
+  let hasAny = false;
+  for (const entry of merged.values()) {
+    const sel = state.lentaPrices[norm(entry.name)];
+    if (!sel) continue;
+    hasAny = true;
+    let packs = 1;
+    if (entry.db && entry.db.pack && entry.hasConvertible) {
+      let naturalAmount = entry.baseTotal;
+      if (entry.db.gramsPerUnit && entry.baseUnit === "г") {
+        naturalAmount = entry.baseTotal / entry.db.gramsPerUnit;
+      }
+      packs = Math.ceil(naturalAmount / entry.db.pack.size);
+      if (packs < 1) packs = 1;
+    }
+    total += sel.price * packs;
+  }
+  if (hasAny) {
+    el.textContent = "Итого (по выбранным ценам): " + total.toFixed(2) + " ₽";
+    el.hidden = false;
+  } else {
+    el.hidden = true;
+  }
+}
+
 function renderShoppingList() {
   const list = document.getElementById("shopping-list");
   const empty = document.getElementById("shopping-empty");
@@ -781,6 +811,7 @@ function renderShoppingList() {
 
   empty.hidden = count > 0 || pantryItems.length > 0;
   list.hidden = count === 0 && pantryItems.length === 0;
+  updateLentaTotal();
 }
 
 /* ----------------------------------------------------------
