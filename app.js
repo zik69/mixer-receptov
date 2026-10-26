@@ -741,6 +741,31 @@ async function updateLentaPrices() {
   renderShoppingList();
 }
 
+function applyLentaSort(mode) {
+  // mode: 'cheapest' | 'priciest' | 'discount'
+  let changed = false;
+  Object.keys(lentaVariants).forEach((key) => {
+    const items = lentaVariants[key];
+    if (!items || !items.length) return;
+    let pick = items[0];
+    items.forEach((it) => {
+      if (mode === "cheapest" && it.prices.price < pick.prices.price) pick = it;
+      if (mode === "priciest" && it.prices.price > pick.prices.price) pick = it;
+      if (mode === "discount" && (it.prices.discountPercentage || 0) > (pick.prices.discountPercentage || 0)) pick = it;
+    });
+    state.lentaPrices[key] = {
+      id: pick.id,
+      name: pick.name,
+      price: pick.prices.price / 100
+    };
+    changed = true;
+  });
+  if (changed) {
+    saveState();
+    renderShoppingList();
+  }
+}
+
 function updateLentaTotal() {
   const chosen = state.checked.map(getRecipe).filter((r) => r);
   const merged = mergeIngredients(chosen);
@@ -1104,6 +1129,12 @@ function initAllRecipesScreen() {
 
   const lentaAllBtn = document.getElementById("lenta-update-btn-all");
   if (lentaAllBtn) lentaAllBtn.addEventListener("click", () => { updateLentaPrices(); });
+  const cheapestAllBtn = document.getElementById("lenta-cheapest-btn-all");
+  if (cheapestAllBtn) cheapestAllBtn.addEventListener("click", () => { applyLentaSort("cheapest"); });
+  const priciestAllBtn = document.getElementById("lenta-priciest-btn-all");
+  if (priciestAllBtn) priciestAllBtn.addEventListener("click", () => { applyLentaSort("priciest"); });
+  const discountAllBtn = document.getElementById("lenta-discount-btn-all");
+  if (discountAllBtn) discountAllBtn.addEventListener("click", () => { applyLentaSort("discount"); });
 
   if (searchInput) {
     searchInput.addEventListener("input", () => {
@@ -1185,6 +1216,12 @@ function initButtons() {
 
   const lentaBtn = document.getElementById("lenta-update-btn");
   if (lentaBtn) lentaBtn.addEventListener("click", () => { updateLentaPrices(); });
+  const cheapestBtn = document.getElementById("lenta-cheapest-btn");
+  if (cheapestBtn) cheapestBtn.addEventListener("click", () => { applyLentaSort("cheapest"); });
+  const priciestBtn = document.getElementById("lenta-priciest-btn");
+  if (priciestBtn) priciestBtn.addEventListener("click", () => { applyLentaSort("priciest"); });
+  const discountBtn = document.getElementById("lenta-discount-btn");
+  if (discountBtn) discountBtn.addEventListener("click", () => { applyLentaSort("discount"); });
 
   const resetBtn = document.getElementById("reset-btn");
   if (resetBtn) {
