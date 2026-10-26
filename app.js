@@ -741,8 +741,9 @@ async function updateLentaPrices() {
   renderShoppingList();
 }
 
-function applyLentaSort(mode) {
-  // mode: 'cheapest' | 'priciest' | 'discount'
+async function applyLentaSort(mode) {
+  // Сначала обновляем цены (загружаем варианты), потом применяем сортировку
+  await updateLentaPrices();
   let changed = false;
   Object.keys(lentaVariants).forEach((key) => {
     const items = lentaVariants[key];
