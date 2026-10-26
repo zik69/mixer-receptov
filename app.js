@@ -875,6 +875,13 @@ function renderShoppingListTo(suffix) {
   empty.hidden = count > 0 || pantryItems.length > 0;
   list.hidden = count === 0 && pantryItems.length === 0;
   updateLentaTotal();
+  // Активируем кнопки Ленты только если есть товары в списке
+  const hasItems = count > 0;
+  ["lenta-update-btn", "lenta-cheapest-btn", "lenta-priciest-btn", "lenta-discount-btn",
+   "lenta-update-btn-all", "lenta-cheapest-btn-all", "lenta-priciest-btn-all", "lenta-discount-btn-all"].forEach((id) => {
+    const b = document.getElementById(id);
+    if (b) b.disabled = !hasItems;
+  });
 }
 
 function renderShoppingList() {
