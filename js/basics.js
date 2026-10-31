@@ -88,6 +88,39 @@ function norm(text) {
   return String(text).toLowerCase().replace(/ё/g, "е").trim();
 }
 
+/** Число в русском виде: 2 → «2», 0.5 → «0,5», 1.25 → «1,25» */
+function formatQty(value) {
+  const rounded = Math.round(value * 100) / 100;
+  return Number.isInteger(rounded) ? String(rounded) : String(rounded).replace(".", ",");
+}
+
+// То, что считают поштучно и ложками: округляем до половины
+const HALF_STEP_UNITS = new Set([
+  "шт", "ст.л.", "ч.л.", "зубчик", "зубчика", "ломтик", "ломтика",
+  "лист", "листиков", "веточка", "веточки", "пучок", "стебель",
+  "стебля", "головка", "банка", "уп."
+]);
+
+/** Округление «по-кухонному»: граммы до целых, штуки и ложки до половины */
+function roundForCooking(value, unit) {
+  if (HALF_STEP_UNITS.has(unit)) return Math.max(0.5, Math.round(value * 2) / 2);
+  if (unit === "г" || unit === "мл") return Math.round(value);
+  if (unit === "кг" || unit === "л") return Math.round(value * 100) / 100;
+  return Math.round(value * 10) / 10;
+}
+
+/**
+ * Количество продукта, пересчитанное на наше число людей.
+ * «по вкусу» и «щепотку» оставляем как есть.
+ */
+function amountForServings(amount, factor, unit) {
+  const raw = String(amount).trim();
+  const num = parseFloat(raw.replace(",", "."));
+  if (isNaN(num)) return raw;
+  return formatQty(roundForCooking(num * factor, String(unit || "")));
+}
+
+
 /** Справочник продуктов; null, если он не подключён */
 function ingredientsDb() {
   return typeof INGREDIENTS === "undefined" ? null : INGREDIENTS;

@@ -8,6 +8,19 @@
    Карточка рецепта
    ---------------------------------------------------------- */
 
+/**
+ * Ингредиенты рецепта в количестве на 2 человек.
+ * В каталоге рецепты бывают на 3–6 порций, а готовим мы всегда на 2.
+ */
+function ingredientsForCard(recipe) {
+  const factor = TARGET_SERVINGS / (recipe.servings || TARGET_SERVINGS);
+  return recipe.ingredients.map((ing) => ({
+    name: ing.name,
+    unit: ing.unit,
+    amount: amountForServings(ing.amount, factor, ing.unit)
+  }));
+}
+
 function renderCard(recipe) {
   const card = document.createElement("article");
   card.className = "card";
@@ -15,7 +28,7 @@ function renderCard(recipe) {
 
   const badgeClass = CATEGORY_BADGE[recipe.category] || "badge--dinner";
 
-  const ingredients = recipe.ingredients
+  const ingredients = ingredientsForCard(recipe)
     .map((ing) => `
         <li>
           <span class="ingredients__name">${esc(ing.name)}</span>
@@ -32,7 +45,7 @@ function renderCard(recipe) {
   card.innerHTML = `
     <div class="card__meta">
       <span class="badge ${badgeClass}">${esc(CATEGORY_LABEL[recipe.category] || recipe.category)}</span>
-      <span class="card__meta-text">${esc(recipe.time)} мин · ${esc(recipe.servings)} порции</span>
+      <span class="card__meta-text">${esc(recipe.time)} мин · на ${TARGET_SERVINGS} человек</span>
     </div>
 
     <h3 class="card__title">${esc(recipe.title)}</h3>
