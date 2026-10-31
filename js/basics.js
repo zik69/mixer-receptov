@@ -48,7 +48,8 @@ const state = {
   perCategory: 2,     // сколько рецептов в каждой категории
   cuisine: "обычная",  // выбранная кухня: "обычная", "китайская" или "сложная"
   lentaPrices: {},    // выбранные цены Ленты: ключ norm(имя) -> { id, name, price }
-  homeIngredients: [] // ингредиенты, которые есть дома
+  homeIngredients: [], // ингредиенты, которые есть дома
+  autoList: true      // рецепты дня сразу попадают в список покупок
 };
 
 // Кэш вариантов Ленты в памяти (не сохраняется): ключ norm(имя) -> массив товаров
@@ -188,4 +189,9 @@ function loadState() {
   if (CUISINES.includes(data.cuisine)) state.cuisine = data.cuisine;
   if (data.lentaPrices && typeof data.lentaPrices === "object") state.lentaPrices = data.lentaPrices;
   if (Array.isArray(data.homeIngredients)) state.homeIngredients = data.homeIngredients.filter((x) => typeof x === "string");
+
+  // Старые сохранения не знали про автосписок: считаем, что весь набор дня уже в списке
+  if (data.autoList !== true && state.current.length) {
+    state.checked = state.current.slice();
+  }
 }

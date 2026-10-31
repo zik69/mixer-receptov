@@ -46,6 +46,7 @@ function renderCard(recipe) {
     <div class="card__meta">
       <span class="badge ${badgeClass}">${esc(CATEGORY_LABEL[recipe.category] || recipe.category)}</span>
       <span class="card__meta-text">${esc(recipe.time)} мин · на ${TARGET_SERVINGS} человек</span>
+      ${state.checked.includes(recipe.id) ? '<span class="card__in-list">в списке</span>' : ""}
     </div>
 
     <h3 class="card__title">${esc(recipe.title)}</h3>
@@ -66,7 +67,7 @@ function renderCard(recipe) {
 
     <label class="check">
       <input type="checkbox" data-action="add-to-shopping">
-      <span class="check__text">Добавлю в покупки</span>
+      <span class="check__text">В списке покупок</span>
     </label>
   `;
 
@@ -104,8 +105,9 @@ function renderCard(recipe) {
       check.classList.remove("check--done");
     }
     saveState();
-    // перерисовываем, чтобы выбранные карточки ушли вниз
+    // перерисовываем: обновляем пометку «в списке» и список покупок
     render();
+    if (!document.getElementById("all-recipes-screen").hidden) renderAllRecipes();
   });
 
   return card;
@@ -115,34 +117,15 @@ function renderCard(recipe) {
    Главный экран
    ---------------------------------------------------------- */
 
-/** Отмеченные рецепты уезжают в отдельный раздел «Выбранное» */
-function renderSelected() {
-  const box = document.getElementById("selected-cards");
-  if (!box) return;
-
-  const section = box.parentElement;
-  box.innerHTML = "";
-
-  const selected = state.current
-    .map(getRecipe)
-    .filter((recipe) => recipe && state.checked.includes(recipe.id));
-
-  selected.forEach((recipe) => box.appendChild(renderCard(recipe)));
-  if (section) section.hidden = selected.length === 0;
-}
-
 function render() {
-  renderSelected();
-
   for (const cat of CATEGORIES) {
     const box = document.getElementById(cat.target);
     if (!box) continue;
     box.innerHTML = "";
 
-    // Выбранные рецепты убираем из категорий (они в разделе «Выбранное»)
     const items = state.current
       .map(getRecipe)
-      .filter((recipe) => recipe && recipe.category === cat.key && !state.checked.includes(recipe.id));
+      .filter((recipe) => recipe && recipe.category === cat.key);
 
     if (!items.length) {
       const note = document.createElement("p");

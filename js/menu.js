@@ -139,10 +139,13 @@ function generateMenu(excludeCurrent) {
 
   state.current = picked.map((recipe) => recipe.id);
   state.repeats = repeats.map((recipe) => recipe.id);
-  rememberToday(state.current);
 
-  // отметки рецептов, которых больше нет в каталоге, убираем
-  state.checked = state.checked.filter((id) => getRecipe(id));
+  // Весь набор дня сразу попадает в список покупок, а старые отметки «куплено»
+  // от прошлого набора больше не нужны.
+  state.checked = state.current.slice();
+  state.bought = [];
+
+  rememberToday(state.current);
 
   saveState();
   render();
