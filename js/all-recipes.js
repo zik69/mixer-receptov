@@ -7,6 +7,7 @@
 "use strict";
 
 let allRecipesCat = "all";   // текущий фильтр по категории
+let allRecipesCuisine = "all"; // текущий фильтр по кухне
 let allRecipesQuery = "";    // текущий поисковый запрос
 let homeMode = "strict";     // режим фильтра «что есть дома»
 
@@ -153,6 +154,7 @@ function renderAllRecipes() {
 
   const filtered = catalog().filter((recipe) => {
     if (cat !== "all" && recipe.category !== cat) return false;
+    if (allRecipesCuisine !== "all" && recipe.cuisine !== allRecipesCuisine) return false;
     if (query && !recipe.title.toLowerCase().includes(query)) return false;
     if (state.homeIngredients.length) {
       const m = homeMatch(recipe);
@@ -192,7 +194,8 @@ function initAllRecipesScreen() {
   const screen = document.getElementById("all-recipes-screen");
   const backBtn = document.getElementById("all-recipes-back");
   const searchInput = document.getElementById("recipe-search");
-  const catButtons = document.querySelectorAll(".all-recipes-screen__cat");
+  const catButtons = document.querySelectorAll(".all-recipes-screen__cat[data-cat]");
+  const cuisineButtons = document.querySelectorAll(".all-recipes-screen__cat[data-cuisine]");
 
   if (!btn || !screen) return;
 
@@ -200,9 +203,11 @@ function initAllRecipesScreen() {
     screen.hidden = false;
     document.body.style.overflow = "hidden";
     allRecipesCat = "all";
+    allRecipesCuisine = "all";
     allRecipesQuery = "";
     if (searchInput) searchInput.value = "";
     catButtons.forEach((b) => b.classList.toggle("is-active", b.dataset.cat === "all"));
+    cuisineButtons.forEach((b) => b.classList.toggle("is-active", b.dataset.cuisine === "all"));
     renderAllRecipes();
     renderShoppingList();
     renderHomeChips();
@@ -272,6 +277,14 @@ function initAllRecipesScreen() {
     catBtn.addEventListener("click", () => {
       allRecipesCat = catBtn.dataset.cat;
       catButtons.forEach((b) => b.classList.toggle("is-active", b === catBtn));
+      renderAllRecipes();
+    });
+  });
+
+  cuisineButtons.forEach((cuisineBtn) => {
+    cuisineBtn.addEventListener("click", () => {
+      allRecipesCuisine = cuisineBtn.dataset.cuisine;
+      cuisineButtons.forEach((b) => b.classList.toggle("is-active", b === cuisineBtn));
       renderAllRecipes();
     });
   });
